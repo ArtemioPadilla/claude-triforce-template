@@ -12,7 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **tools/dashboard.py**: Comprehensive multi-agent system dashboard with two output modes: Rich terminal UI and self-contained dark-themed HTML. 7 sections: System Overview (agent cards), Feature Pipeline (Kanban), Quality Gate (review verdicts), Tech Debt Register, Workflow Status (visual flow diagrams), Recent Activity (git log, changelog, agent memory), Checklist Inventory (summary + per-agent breakdown). Python 3.9+ compatible, zero-dependency HTML mode, defensive parsing for all data sources
-- **docs/portability/downstream-project.md**: Comprehensive portability guide for porting WHO checklist framework and 24 checklists to downstream-project. Includes file mapping, delta analysis, merge strategies, port order (Skills → CLAUDE.md → Agents), cautions for preserving Downstream-specific content, and verification checklist. Estimated effort: 2-2.5 hours
 
 ### Changed
 - **CLAUDE.md**: Replaced Activation Phenomenon with Three Pause Points framework (SIGN IN / TIME OUT / SIGN OUT — WHO surgical checklist naming). Added Communication Schedule table (6 handoff paths), Error Recovery section with per-agent FLY THE AIRPLANE. Updated Every Agent MUST to reference SIGN IN/SIGN OUT
