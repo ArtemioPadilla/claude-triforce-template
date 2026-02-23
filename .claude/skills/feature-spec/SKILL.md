@@ -15,19 +15,32 @@ Follow these steps:
 - Run the SIGN IN checklist from your agent file
 - Surface any initial concerns about this feature request
 
+**TIER SELECTION:**
+1. Ask the user which spec tier to use:
+   - **S (Small)**: Bug fix, tweak, minor enhancement (~10 min)
+   - **M (Medium)**: Standard feature — default choice (~30-60 min)
+   - **L (Large)**: Epic, multi-phase, API-heavy (~60-90 min)
+2. If the user does not specify, default to M
+
 **RESEARCH (READ-DO):**
-1. Read existing specs in `docs/specs/` to understand current patterns and avoid conflicts
-2. Identify dependencies on existing features or systems
+3. Read existing specs in `docs/specs/` to understand current patterns and avoid conflicts
+4. Identify dependencies on existing features or systems
 
 **BUILD:**
-3. Create a comprehensive spec at `docs/specs/{feature-name}.md` using the template from your system prompt
-4. Ensure all acceptance criteria are testable and unambiguous
-5. List all dependencies, risks, and open questions
+5. Create the spec at `docs/specs/{feature-name}.md` using the tier-appropriate template from your system prompt
+6. For each user story, validate against INVEST:
+   - **I**ndependent: can be delivered separately
+   - **N**egotiable: not a rigid contract, allows discussion
+   - **V**aluable: delivers value to user or business
+   - **E**stimable: Dev can estimate effort
+   - **S**mall: fits in one iteration
+   - **T**estable: has clear acceptance criteria
+7. For M/L tiers, verify IEEE 830 quality attributes: completeness, consistency, unambiguity, verifiability
 
-**⏸️ TIME OUT — Run Spec Completion Checklist (DO-CONFIRM):**
-6. Run through every item in the Spec Completion checklist from your agent file
-7. Fix any gaps BEFORE proceeding
+**TIME OUT -- Run Spec Completion Checklist (DO-CONFIRM):**
+8. Run through every item in the Spec Completion checklist from your agent file
+9. Fix any gaps BEFORE proceeding
 
 **SIGN OUT:**
-8. Write the Handoff-to-Forja using the communication checklist
-9. Run the SIGN OUT checklist from your agent file
+10. Write the Handoff-to-Forja using the communication checklist
+11. Run the SIGN OUT checklist from your agent file

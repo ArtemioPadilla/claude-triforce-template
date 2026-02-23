@@ -27,16 +27,18 @@ Follow these steps:
 5. Run all tests and verify they pass
 6. Run `/code-health` scan
 7. Check that all CHANGES REQUIRED findings have been resolved
-8. Run the Quality Verification checklist from your agent file
+8. Verify spec traceability: every spec with status "In Development" or "Done" has ALL acceptance criteria verified
+9. Verify test quality: tests follow FIRST principles (Fast, Isolated, Repeatable, Self-validating, Timely), Arrange-Act-Assert pattern, no test logic
+10. Run the Quality Verification checklist from your agent file
 
 **⏸️ TIME OUT 3 — Security & Release Gate (DO-CONFIRM):**
-9. Run `/security-audit` on changed files
-10. Run the Security Verification checklist from your agent file
-11. Run the Release Readiness checklist from your agent file
+11. Run `/security-audit` on changed files
+12. Run the Security Verification checklist from your agent file
+13. Run the Release Readiness checklist from your agent file
 
 **SIGN OUT:**
-12. Write release assessment to `docs/reviews/release-check-{version}.md`
-13. Provide final verdict: **READY FOR RELEASE** | **BLOCKED** (with specific reasons)
-14. Run the SIGN OUT checklist from your agent file
+14. Write release assessment to `docs/reviews/release-check-{version}.md`
+15. Provide final verdict: **READY FOR RELEASE** | **BLOCKED** (with specific reasons)
+16. Run the SIGN OUT checklist from your agent file
 
 A release blocked here prevents issues reaching users. This is the last line of defense.

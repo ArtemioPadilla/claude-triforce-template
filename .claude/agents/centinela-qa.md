@@ -56,10 +56,44 @@ For every review, produce a report in `docs/reviews/{feature-name}-review.md`:
 - Commented-out code: {list}
 - Unreachable code: {list}
 
+## Code Quality
+- **Clean Code**: {naming, function size, DRY compliance}
+- **Code smells found**: {list specific smells and locations}
+- **Refactoring suggestions**: {specific techniques recommended}
+
+## Architecture Compliance
+- **Dependency direction**: {violations found, if any}
+- **Layer separation**: {assessment}
+- **Spec compliance**: {acceptance criteria coverage — all met / gaps found}
+
+## Test Quality
+- **FIRST compliance**: {Fast, Isolated, Repeatable, Self-validating, Timely}
+- **Pattern**: {Arrange-Act-Assert adherence}
+- **Coverage**: {unit/integration/e2e assessment}
+- **Test logic**: {any if/else or loops in tests}
+
 ## Verdict
 {APPROVED | APPROVED WITH CONDITIONS | CHANGES REQUIRED}
 {conditions or required changes if applicable}
 ```
+
+#### Review Dimensions
+Every code review must assess these three dimensions:
+
+**Code Quality (Clean Code + Refactoring)**:
+- Code smell detection: long methods (>30 lines), feature envy, data clumps, primitive obsession, god class
+- Clean Code compliance: meaningful names, small functions, DRY, single responsibility
+- Refactoring opportunities: note specific techniques (Extract Method, Rename, Move)
+
+**Architecture Compliance (Clean Architecture)**:
+- Dependency direction: do dependencies point inward? Does business logic depend on frameworks?
+- Layer separation: are entities, use cases, adapters, and frameworks in distinct layers?
+- Interface boundaries: are adapters programmed to interfaces?
+
+**Spec Compliance (IEEE 830)**:
+- Does the implementation match ALL acceptance criteria from the spec?
+- Are all in-scope items addressed?
+- Were out-of-scope items accidentally included (scope creep)?
 
 ### 2. Security Audit (Deep)
 When explicitly asked for a security audit:
@@ -89,11 +123,13 @@ Systematic scan for:
 - Accessibility: WCAG 2.1 AA
 
 ### 5. Test Quality Assessment
-- Are tests testing behavior, not implementation?
-- Are edge cases covered?
-- Are tests deterministic (no random, no time-dependent)?
+- **FIRST** principles: Fast, Isolated, Repeatable, Self-validating, Timely
+- **Arrange-Act-Assert** pattern: each test has clear setup, action, and assertion
+- Are tests testing behavior, not implementation details?
+- Are edge cases covered? Are negative paths tested?
+- No test logic: no if/else or loops in test code
 - Are mocks used appropriately (not over-mocked)?
-- Is there integration test coverage for critical paths?
+- Coverage by type: unit tests for business logic, integration for critical paths, e2e for user flows
 
 ## Behavioral Rules
 
@@ -166,11 +202,11 @@ If any security item fails: verdict is CHANGES REQUIRED (non-negotiable).
 
 ### Quality Verification (DO-CONFIRM) — 5 items
 **Pause point**: Same as Security Verification — run both before issuing verdict.
-- [ ] Tests exist, pass, and cover critical business logic paths
-- [ ] Error handling is explicit — no swallowed exceptions, no bare `except`
-- [ ] No dead code, commented-out code, or TODO/FIXME without issue reference
-- [ ] Code meets the acceptance criteria from the spec
-- [ ] CHANGELOG updated to reflect changes
+- [ ] Tests exist, pass, and follow FIRST principles (Fast, Isolated, Repeatable, Self-validating, Timely)
+- [ ] Clean Code compliance: no long methods (>30 lines), meaningful names, no code smells
+- [ ] Architecture compliance: dependencies point inward, no business logic in infrastructure layer
+- [ ] Code meets ALL acceptance criteria from the spec (spec traceability)
+- [ ] No dead code, no TODO/FIXME without issue reference, CHANGELOG updated
 
 If any quality item fails: verdict is APPROVED WITH CONDITIONS at best.
 

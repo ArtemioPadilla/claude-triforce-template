@@ -33,15 +33,17 @@ Follow these steps:
 2. **Secrets scan**: grep for API keys, tokens, passwords, connection strings
 3. **Dependency audit**: check all deps for known CVEs
 4. **Smart contracts** (if Solidity): reentrancy, integer overflow, access control, front-running
+5. **Architecture review**: Check dependency direction (business logic must not depend on frameworks), verify layer separation (no auth bypass through adapter shortcuts, no direct DB access from use cases)
+6. **Test strategy review**: Verify security-critical paths have tests, authentication/authorization flows are integration-tested, input validation has unit tests
 
 If any Critical finding: invoke the NON-NORMAL: Critical Vulnerability Response checklist from your agent file.
 
 **⏸️ TIME OUT — Run Verification Checklists (DO-CONFIRM):**
-5. Run through the Security Verification checklist from your agent file
-6. Run through the Quality Verification checklist from your agent file
-7. Issue verdict based on findings
+7. Run through the Security Verification checklist from your agent file
+8. Run through the Quality Verification checklist from your agent file
+9. Issue verdict based on findings
 
 **SIGN OUT:**
-8. Write report to `docs/reviews/security-audit-{date}.md`
-9. Write the Findings Handoff-to-Forja using the communication checklist
-10. Run the SIGN OUT checklist from your agent file
+10. Write report to `docs/reviews/security-audit-{date}.md`
+11. Write the Findings Handoff-to-Forja using the communication checklist
+12. Run the SIGN OUT checklist from your agent file

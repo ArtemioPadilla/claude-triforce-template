@@ -25,12 +25,19 @@ Follow these steps:
 2. Check for outdated dependencies:
    - `pip list --outdated` or `npm outdated`
    - Known vulnerabilities: `pip audit` or `npm audit`
-3. Scan for code smells:
-   - Functions longer than 50 lines
-   - Files longer than 500 lines
-   - Deeply nested code (>4 levels)
-   - Duplicated logic blocks
-4. Check TODO/FIXME comments — do they have issue references?
+3. Scan for Clean Code violations:
+   - Functions longer than 30 lines
+   - Files longer than 300 lines
+   - Deeply nested code (>3 levels of indentation)
+   - Duplicated logic blocks (DRY violations)
+   - Primitive obsession (raw strings/ints where a domain type belongs)
+   - Feature envy (methods that use another class's data more than their own)
+   - God classes (classes with too many responsibilities)
+4. Verify architecture compliance:
+   - Dependency direction: does business logic depend on frameworks or infrastructure?
+   - Layer leakage: are there imports that cross architectural boundaries incorrectly?
+   - Screaming Architecture: does folder structure reveal intent?
+5. Check TODO/FIXME comments — do they have issue references?
 
 **⏸️ TIME OUT — Scan Complete Checklist (DO-CONFIRM):**
 - [ ] All source directories scanned (not just `src/` — also `tests/`, config files)
@@ -40,6 +47,6 @@ Follow these steps:
 - [ ] Previous scan findings compared — are old issues resolved or recurring?
 
 **SIGN OUT:**
-5. Write findings to `docs/reviews/code-health-{date}.md`
-6. Write the Findings Handoff-to-Forja using the communication checklist
-7. Run the SIGN OUT checklist from your agent file
+6. Write findings to `docs/reviews/code-health-{date}.md`
+7. Write the Findings Handoff-to-Forja using the communication checklist
+8. Run the SIGN OUT checklist from your agent file

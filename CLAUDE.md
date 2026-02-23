@@ -107,6 +107,43 @@ When normal operations fail, the agent switches to the relevant Non-Normal READ-
 5. Update CHANGELOG.md if any code or spec changed
 6. Update TECH_DEBT.md if tech debt was added, found, or resolved
 
+## Software Engineering Principles
+
+These principles guide all agents. They are a shared design compass — not rigid rules.
+
+### Specifications (IEEE 830 + INVEST)
+- Specs use tiered templates: **S** (bug fix, 5 sections), **M** (standard feature, 14 sections), **L** (epic, 19 sections)
+- Every user story passes **INVEST**: Independent, Negotiable, Valuable, Estimable, Small, Testable
+- Acceptance criteria use **GIVEN/WHEN/THEN** format
+- Quality attributes: complete, consistent, unambiguous, verifiable, traceable
+
+### Architecture (Clean Architecture — Robert C. Martin)
+- **Dependency Rule**: dependencies point inward (entities → use cases → adapters → frameworks)
+- **Screaming Architecture**: folder structure reveals intent, not framework
+- **SOLID**: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion
+
+### Development (TDD — Kent Beck + Clean Code — Robert C. Martin)
+- **Red-Green-Refactor**: failing test → minimal code to pass → refactor for clarity
+- **Small functions**: one thing, one level of abstraction, <30 lines
+- **Meaningful names**: intention-revealing, no noise words, no abbreviations
+- **DRY, YAGNI, KISS**: don't repeat, don't build unneeded things, keep it simple
+- **Error handling**: prefer exceptions over null returns, fail fast
+
+### Testing (FIRST Principles)
+- **Fast, Isolated, Repeatable, Self-validating, Timely**
+- **Arrange-Act-Assert** pattern for every test
+- Unit tests for business logic (>80% coverage), integration tests for critical paths, e2e for user flows
+- No test logic: no if/else or loops in test code
+
+### Refactoring (Martin Fowler)
+- Extract Method, Rename, Move, Inline — the everyday toolkit
+- Code smells: long method, feature envy, data clump, primitive obsession, god class
+- **Boy Scout Rule**: leave code better than you found it
+
+### Other
+- **12-Factor App**: config in environment, backing services, disposability, dev/prod parity
+- **Design Patterns (GoF)**: favor composition over inheritance, program to interfaces
+
 ## Project Conventions
 
 ### File Locations
@@ -123,9 +160,11 @@ When normal operations fail, the agent switches to the relevant Non-Normal READ-
 ### Code Standards
 - Python: type hints everywhere, docstrings on public functions, no bare except
 - TypeScript: strict mode, no `any` without documented justification, JSDoc on exports
+- Functions <30 lines, one level of abstraction, meaningful names
 - No hardcoded secrets, URLs, or config values
 - No commented-out code (it's in git history)
 - No TODO/FIXME without a linked issue or ticket reference
+- Prefer exceptions over null returns for error handling
 - Structured logging (JSON format)
 - All public APIs documented with OpenAPI/Swagger
 

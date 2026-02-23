@@ -143,6 +143,7 @@ class SpecInfo:
     status: str
     priority: str
     spec_date: str
+    tier: str = ""
 
 
 @dataclass
@@ -361,6 +362,7 @@ def parse_specs() -> List[SpecInfo]:
         status_m = re.search(r"\*\*Status\*\*:\s*(.+)", text)
         priority_m = re.search(r"\*\*Priority\*\*:\s*(.+)", text)
         date_m = re.search(r"\*\*Date\*\*:\s*(.+)", text)
+        tier_m = re.search(r"\*\*Tier\*\*:\s*([SML])", text)
         specs.append(
             SpecInfo(
                 filename=path.name,
@@ -368,6 +370,7 @@ def parse_specs() -> List[SpecInfo]:
                 status=status_m.group(1).strip() if status_m else "Unknown",
                 priority=priority_m.group(1).strip() if priority_m else "Unknown",
                 spec_date=date_m.group(1).strip() if date_m else "",
+                tier=tier_m.group(1) if tier_m else "",
             )
         )
     return specs
@@ -913,7 +916,7 @@ def _term_feature_pipeline(console: object, data: DashboardData) -> None:
     for stage in PIPELINE_STAGES:
         items = [s for s in data.specs if s.status == stage]
         if items:
-            cell = "\n".join(f"[dim]{s.priority}[/] {s.title}" for s in items)
+            cell = "\n".join(f"[dim]{s.priority}[/]{f' ({s.tier})' if s.tier else ''} {s.title}" for s in items)
         else:
             cell = "[dim]--[/]"
         row.append(cell)
@@ -1755,7 +1758,8 @@ tr:last-child td {{ border-bottom: none; }}
             if items:
                 for s in items:
                     pri_css = _priority_css(s.priority)
-                    self._w(f'<div class="kanban-item"><span class="priority {pri_css}">{_esc(s.priority)}</span><br>{_esc(s.title)}</div>')
+                    tier_badge = f' <span style="color:#94a3b8;font-size:10px;font-weight:bold">({s.tier})</span>' if s.tier else ""
+                    self._w(f'<div class="kanban-item"><span class="priority {pri_css}">{_esc(s.priority)}</span>{tier_badge}<br>{_esc(s.title)}</div>')
             else:
                 self._w('<div style="color:var(--text-dim);font-size:12px;text-align:center">--</div>')
             self._w("</div>")

@@ -16,20 +16,31 @@ Follow these steps:
 - Run the Receiving-from-Prometeo checklist to verify the spec handoff
 - If significant architecture decisions are needed, create an ADR in `docs/adr/`
 
-**BUILD:**
-1. Define interfaces/contracts first
-2. Implement the feature in `src/` following project conventions
-3. Write tests in `tests/` (unit + integration for critical paths)
-4. Scan for and remove any dead code you introduced or found
+**DESIGN:**
+1. Define interfaces/contracts first — program to interfaces, not implementations
+2. Plan the layer structure: entities → use cases → adapters → frameworks (Clean Architecture)
+3. Identify which business logic needs TDD (test-first) vs infrastructure glue (test-after acceptable)
+
+**BUILD (TDD Cycle):**
+4. For each piece of business logic:
+   a. **Red**: Write a failing test that describes the expected behavior (Arrange-Act-Assert)
+   b. **Green**: Write minimal code to make the test pass
+   c. **Refactor**: Clean up — extract methods, improve names, remove duplication
+5. Implement infrastructure/adapters and write integration tests for critical paths
+6. Scan for and remove any dead code you introduced or found
 
 **⏸️ TIME OUT — Run Implementation Complete Checklist (DO-CONFIRM):**
-5. Run through every item in the Implementation Complete checklist from your agent file
-6. Fix any failures BEFORE proceeding
-
-**⏸️ TIME OUT — Run Pre-Delivery Checklist (DO-CONFIRM):**
-7. Run through every item in the Pre-Delivery checklist from your agent file
+7. Run through every item in the Implementation Complete checklist from your agent file
 8. Fix any failures BEFORE proceeding
 
+**REFACTORING PASS:**
+9. Review all new code for code smells: long methods, feature envy, data clumps, primitive obsession
+10. Apply Extract Method, Rename, Move as needed — leave code better than you found it
+
+**⏸️ TIME OUT — Run Pre-Delivery Checklist (DO-CONFIRM):**
+11. Run through every item in the Pre-Delivery checklist from your agent file
+12. Fix any failures BEFORE proceeding
+
 **SIGN OUT:**
-9. Write the Handoff-to-Centinela using the communication checklist
-10. Run the SIGN OUT checklist from your agent file
+13. Write the Handoff-to-Centinela using the communication checklist
+14. Run the SIGN OUT checklist from your agent file
