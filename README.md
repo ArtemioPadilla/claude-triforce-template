@@ -1,6 +1,24 @@
 # Agent Triforce
 
-A 3-agent development system (PM / Dev / QA) with checklist methodology for production-grade software development. Powered by [Claude Code](https://code.claude.com).
+[![GitHub stars](https://img.shields.io/github/stars/ArtemioPadilla/agent-triforce?style=flat-square)](https://github.com/ArtemioPadilla/agent-triforce/stargazers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue?style=flat-square)](CHANGELOG.md)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-Plugin-blueviolet?style=flat-square)](https://claude.ai/code)
+[![Sponsor](https://img.shields.io/badge/sponsor-EA4AAA?style=flat-square&logo=github-sponsors&logoColor=white)](https://github.com/sponsors/ArtemioPadilla)
+
+A 3-agent development system (PM / Dev / QA) that applies checklist methodology from *The Checklist Manifesto* (Atul Gawande) and Boeing's checklist engineering (Daniel Boorman) to AI-assisted software development. Built for teams and individuals who want structured, auditable, production-grade workflows — not ad-hoc prompting.
+
+![Agent Triforce Dashboard](docs/images/dashboard.png)
+
+## Why Agent Triforce?
+
+Most multi-agent systems focus on *more agents*. Agent Triforce focuses on *more discipline*.
+
+- **Methodology over quantity** — 3 agents with 24 checklists (117 items) governed by the WHO Surgical Safety Checklist model, not 100+ generic agents with no coordination
+- **Three mandatory pause points** — every agent invocation follows SIGN IN (before work), TIME OUT (mid-workflow verification), SIGN OUT (before handoff). Steps don't get skipped.
+- **Engineering principles built in** — Clean Architecture, TDD, FIRST testing, and refactoring methodology are embedded into agent behavior, not left to chance
+- **Persistent memory** — agents build on prior decisions across sessions. Context carries forward, not lost between invocations
+- **Structured handoffs** — 6 defined communication paths between agents with explicit protocols (what was done, what to watch for, what's needed next)
 
 ## Install
 
@@ -32,8 +50,8 @@ claude
 
 | Skill | Agent | What it does |
 |-------|-------|-------------|
-| `/feature-spec` | Prometeo | Create a feature specification |
-| `/implement-feature` | Forja | Implement a feature from its spec |
+| `/feature-spec` | Prometeo | Create a feature specification (tiered: S/M/L) |
+| `/implement-feature` | Forja | Implement a feature from its spec (TDD workflow) |
 | `/review-findings` | Forja | Fix findings from a QA review |
 | `/security-audit` | Centinela | Deep OWASP security audit |
 | `/code-health` | Centinela | Dead code, tech debt, dependency scan |
@@ -66,6 +84,26 @@ This system applies principles from *The Checklist Manifesto* (Atul Gawande) and
 - **Two types**: DO-CONFIRM (verify after work) and READ-DO (step-by-step for handoffs and error recovery)
 - **24 checklists, 117 items** across 3 agents. No checklist exceeds 9 items.
 
+## Engineering Principles
+
+Every agent follows established software engineering practices:
+
+- **Specs**: IEEE 830 + INVEST validation, tiered templates (S/M/L), GIVEN/WHEN/THEN acceptance criteria
+- **Architecture**: Clean Architecture (Robert C. Martin) — dependency rule, screaming architecture, SOLID
+- **Development**: TDD Red-Green-Refactor (Kent Beck), Clean Code (<30 line functions, meaningful names, DRY)
+- **Testing**: FIRST principles (Fast, Isolated, Repeatable, Self-validating, Timely), Arrange-Act-Assert pattern
+- **Refactoring**: Fowler's toolkit — Extract Method, Rename, Move, Boy Scout Rule
+- **Infrastructure**: 12-Factor App patterns, Gang of Four design patterns
+
+## Key Features
+
+- **Persistent Memory**: Each agent remembers decisions across sessions
+- **Auto-formatting**: Dev agent auto-runs ruff/biome after every file edit
+- **Permission Enforcement**: PM can't edit code (plan mode), QA is read-only by default
+- **System Dashboard**: HTML dashboard auto-generated after every agent session
+- **Dead Code Detection**: QA scans for dead code on every review
+- **Structured Handoffs**: Communication schedule with 6 defined handoff paths between agents
+
 ## Project Structure
 
 ```
@@ -96,15 +134,6 @@ This system applies principles from *The Checklist Manifesto* (Atul Gawande) and
 └── tests/                             # Tests
 ```
 
-## Key Features
-
-- **Persistent Memory**: Each agent remembers decisions across sessions
-- **Auto-formatting**: Dev agent auto-runs ruff/biome after every file edit
-- **Permission Enforcement**: PM can't edit code (plan mode), QA is read-only by default
-- **System Dashboard**: HTML dashboard auto-generated after every agent session
-- **Dead Code Detection**: QA scans for dead code on every review
-- **Structured Handoffs**: Communication schedule with 6 defined handoff paths between agents
-
 ## Customization
 
 | What | Where |
@@ -116,10 +145,14 @@ This system applies principles from *The Checklist Manifesto* (Atul Gawande) and
 
 ## Requirements
 
-- [Claude Code](https://code.claude.com) v2.1.32+
+- [Claude Code](https://claude.ai/code) v2.1.32+
 - Claude Max or Pro subscription (or API key)
 
 > **Note**: Agent Triforce is a provider-agnostic methodology. The checklist framework, agent roles, and workflows are portable to other AI coding tools as they mature to support multi-agent orchestration.
+
+## Support
+
+If Agent Triforce helps your team ship better software, consider [sponsoring development](https://github.com/sponsors/ArtemioPadilla).
 
 ## License
 
