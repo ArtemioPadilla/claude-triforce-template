@@ -9,9 +9,9 @@
 
 Agent Triforce is a fully packaged, installable Claude Code plugin implementing a 3-agent development system (Prometeo PM, Forja Dev, Centinela QA) with a rigorous checklist methodology derived from *The Checklist Manifesto* (Atul Gawande) and Boeing's checklist engineering (Daniel Boorman). It applies WHO Surgical Safety Checklist pause points (SIGN IN / TIME OUT / SIGN OUT) to software development workflows.
 
-The plugin was published on 2026-02-22 at `ArtemioPadilla/agent-triforce-template`. It is currently:
+The plugin was published on 2026-02-22 at `ArtemioPadilla/agent-triforce`. It is currently:
 - Publicly accessible on GitHub
-- Installable via `/plugin marketplace add ArtemioPadilla/agent-triforce-template`
+- Installable via `/plugin marketplace add ArtemioPadilla/agent-triforce`
 - Unknown to the broader developer community
 
 **The problem**: a high-quality, differentiated product exists with zero active distribution. Organic discovery in the Claude Code plugin ecosystem is low-probability without deliberate promotion. Meanwhile, the methodological angle (Gawande + Boeing applied to AI agents) is a genuinely unique positioning that is not being communicated.
@@ -447,7 +447,7 @@ This plan does not involve product changes — it is a marketing and distributio
 3. **Substack vs Beehiiv**: Substack has better brand recognition but Beehiiv has more monetization control. Which platform is optimal for the paid newsletter tier?
 4. **Consulting delivery format**: Is async-first (GitHub PRs + Loom videos) or synchronous (Zoom workshops) more valued by the target persona (engineering team leads)? Recommend a brief 3-question survey to the first 50 GitHub stargazers.
 5. **Naming — "Agent Triforce" vs "Claude Triforce"**: The current brand is provider-agnostic ("Agent Triforce") but the primary use case is Claude Code. Does the name create confusion for users searching specifically for Claude Code solutions? (See CHANGELOG for rebrand rationale.)
-6. **Repository naming**: The GitHub repo is currently `ArtemioPadilla/claude-triforce-template` but the product is branded "Agent Triforce". Is a repository rename to `agent-triforce-template` planned? This affects all install command documentation and curated list submissions.
+6. ~~**Repository naming**~~: Resolved — repo renamed to `ArtemioPadilla/agent-triforce` on 2026-02-23.
 7. **Legal**: Are there trademark or naming considerations for using "Triforce" in the product name (Nintendo IP)?
 
 ---

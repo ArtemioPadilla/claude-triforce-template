@@ -7,7 +7,7 @@ A 3-agent development system (PM / Dev / QA) with checklist methodology for prod
 ### As a Plugin (add to any existing project)
 
 ```bash
-/plugin marketplace add ArtemioPadilla/agent-triforce-template
+/plugin marketplace add ArtemioPadilla/agent-triforce
 /plugin install agent-triforce@agent-triforce
 /agent-triforce:setup    # scaffold project directories
 ```
@@ -15,7 +15,7 @@ A 3-agent development system (PM / Dev / QA) with checklist methodology for prod
 ### As a Template (start a new project)
 
 ```bash
-gh repo create my-project --template ArtemioPadilla/agent-triforce-template
+gh repo create my-project --template ArtemioPadilla/agent-triforce
 cd my-project
 claude
 ```
