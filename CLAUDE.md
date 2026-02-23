@@ -1,4 +1,4 @@
-# 🔱 Claude Triforce — Multi-Agent Development System
+# 🔱 Agent Triforce — Multi-Agent Development System
 
 ## System Overview
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Claude Triforce Dashboard -- multi-agent system overview.
+"""Agent Triforce Dashboard -- multi-agent system overview.
 
 Parses project files and renders a comprehensive dashboard in two modes:
   - Terminal (default): Rich terminal UI using the ``rich`` library
@@ -393,10 +393,10 @@ def parse_reviews() -> List[ReviewInfo]:
             rtype = "release-check"
         else:
             rtype = "feature"
-        # Count findings
-        critical = len(re.findall(r"\*\*\[C-\d+\]\*\*", text))
-        warning = len(re.findall(r"\*\*\[W-\d+\]\*\*", text))
-        suggestion = len(re.findall(r"\*\*\[S-\d+\]\*\*", text))
+        # Count unique findings (IDs repeat across sections in review files)
+        critical = len(set(re.findall(r"\*\*\[C-\d+\]\*\*", text)))
+        warning = len(set(re.findall(r"\*\*\[W-\d+\]\*\*", text)))
+        suggestion = len(set(re.findall(r"\*\*\[S-\d+\]\*\*", text)))
         # Verdict
         verdict = "Unknown"
         for v in ["CHANGES REQUIRED", "APPROVED WITH CONDITIONS", "APPROVED"]:
@@ -664,6 +664,17 @@ def _compute_next_actions(
             details=f"Reviews requiring changes: {names}",
         ))
 
+    # Check for reviews approved with conditions
+    conditions_reviews = [r for r in reviews if "CONDITIONS" in r.verdict.upper()]
+    if conditions_reviews:
+        names = ", ".join(r.filename for r in conditions_reviews)
+        actions.append(NextAction(
+            agent="QA",
+            command="/release-check",
+            description="Verify review conditions are met",
+            details=f"Reviews with conditions: {names}",
+        ))
+
     # Check for critical/high tech debt
     urgent_debt = [d for d in active_debt if d.severity in ("Critical", "High")]
     if urgent_debt:
@@ -788,7 +799,7 @@ def _term_header(console: object, data: DashboardData) -> None:
 
     health_style = {"HEALTHY": "green", "WARNING": "yellow", "CRITICAL": "bold red"}[data.health.value]
     title_text = Text.assemble(
-        ("Claude Triforce Dashboard", "bold white"),
+        ("Agent Triforce Dashboard", "bold white"),
         ("  |  System: ", "dim"),
     )
     console.print(
@@ -1212,7 +1223,7 @@ class _HtmlBuilder:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Claude Triforce Dashboard</title>
+<title>Agent Triforce Dashboard</title>
 <style>
 :root {{
   --bg: {COLOR_BG_HEX};
@@ -1622,7 +1633,7 @@ tr:last-child td {{ border-bottom: none; }}
 .adr-status-deprecated {{ color: var(--text-dim); font-weight: 600; }}
 .workflow-step.active {{
   background: rgba(6,182,212,0.15);
-  border-color: #06b6d4;
+  border-color: #06b6d4 !important;
   color: #06b6d4;
   font-weight: 700;
   box-shadow: 0 0 8px rgba(6,182,212,0.3);
@@ -1657,7 +1668,7 @@ tr:last-child td {{ border-bottom: none; }}
         """Render header with health badge, quick actions, and sticky nav."""
         self._w(f"""<div class="header">
   <div>
-    <h1>Claude Triforce Dashboard</h1>
+    <h1>Agent Triforce Dashboard</h1>
     <div class="quick-actions">
       <span class="quick-action pm" title="Define a feature spec (Prometeo)">/feature-spec</span>
       <span class="quick-action dev" title="Implement from spec (Forja)">/implement-feature</span>
@@ -1678,8 +1689,7 @@ tr:last-child td {{ border-bottom: none; }}
   <div class="stat-item"><div class="stat-value">{len(data.reviews)}</div><div class="stat-label">Reviews</div></div>
   <div class="stat-item"><div class="stat-value">{active_debt_count}</div><div class="stat-label">Active Debt</div></div>
   <div class="stat-item"><div class="stat-value">{len(data.adrs)}</div><div class="stat-label">ADRs</div></div>
-  <div class="stat-item"><div class="stat-value">{total_checklists}</div><div class="stat-label">Checklists</div></div>
-  <div class="stat-item"><div class="stat-value">{total_items}</div><div class="stat-label">Checklist Items</div></div>
+  <div class="stat-item"><div class="stat-value">{total_checklists}<span style="font-size:12px;font-weight:400;color:var(--text-dim)"> ({total_items})</span></div><div class="stat-label">Checklists (items)</div></div>
   <div class="stat-item"><div class="stat-value">{len(data.commits)}</div><div class="stat-label">Commits</div></div>
 </div>""")
 
@@ -1990,7 +2000,7 @@ def _verdict_css(verdict: str) -> str:
 def main() -> None:
     """Entry point for the dashboard CLI."""
     parser = argparse.ArgumentParser(
-        description="Claude Triforce Dashboard -- multi-agent system overview",
+        description="Agent Triforce Dashboard -- multi-agent system overview",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "Examples:\n"

@@ -16,7 +16,7 @@ Track all known technical debt. Updated by both Dev (Forja) and QA (Centinela) a
 
 -->
 
-### [TD-001] Versioning and upgrade system for the triforce framework
+### [TD-001] Versioning and upgrade system for the Agent Triforce framework
 - **Type**: Design
 - **Severity**: Medium
 - **Found**: 2026-02-15

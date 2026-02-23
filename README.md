@@ -1,6 +1,6 @@
-# 🔱 claude-triforce-template
+# 🔱 agent-triforce-template
 
-A Claude Code template repository that sets up a 3-agent development system for production-grade software development.
+A template repository that sets up a 3-agent development system for production-grade software development. Powered by [Claude Code](https://code.claude.com) as the runtime engine.
 
 ## Agents
 
@@ -14,7 +14,7 @@ A Claude Code template repository that sets up a 3-agent development system for 
 
 ```bash
 # 1. Use this template to create your new project
-gh repo create my-project --template your-username/claude-triforce-template
+gh repo create my-project --template your-username/agent-triforce-template
 
 # 2. Clone and enter
 cd my-project
@@ -103,5 +103,8 @@ Add to `CLAUDE.md` or create `.claude/rules/` files.
 
 ## Requirements
 
-- [Claude Code](https://code.claude.com) v2.1.32+
+### Runtime
+- [Claude Code](https://code.claude.com) v2.1.32+ (the AI coding agent that powers agent orchestration)
 - Claude Max or Pro subscription (or API key)
+
+> **Note**: Agent Triforce is a provider-agnostic methodology. The `.claude/` directory contains the Claude Code runtime configuration (agents, skills, hooks, memory). The checklist framework, agent roles, and workflows are portable to other AI coding tools as they mature to support multi-agent orchestration.
