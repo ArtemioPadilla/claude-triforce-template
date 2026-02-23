@@ -1,0 +1,2 @@
+# Optional: only needed for terminal mode (HTML mode has zero dependencies)
+rich>=13.0.0

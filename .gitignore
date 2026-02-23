@@ -1,6 +1,6 @@
 # Claude Code
 CLAUDE.local.md
-.claude/agent-memory/*/
+.claude/agent-memory/
 
 # Dependencies
 node_modules/
@@ -33,6 +33,9 @@ Thumbs.db
 # Logs
 *.log
 logs/
+
+# Generated
+tools/dashboard.html
 
 # Coverage
 coverage/

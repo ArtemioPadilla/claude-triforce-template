@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!-- PM adds planned features here -->
 
 ### Added
+- **tools/dashboard.py**: Comprehensive multi-agent system dashboard with two output modes: Rich terminal UI and self-contained dark-themed HTML. 7 sections: System Overview (agent cards), Feature Pipeline (Kanban), Quality Gate (review verdicts), Tech Debt Register, Workflow Status (visual flow diagrams), Recent Activity (git log, changelog, agent memory), Checklist Inventory (summary + per-agent breakdown). Python 3.9+ compatible, zero-dependency HTML mode, defensive parsing for all data sources
 - **docs/portability/downstream-project.md**: Comprehensive portability guide for porting WHO checklist framework and 24 checklists to downstream-project. Includes file mapping, delta analysis, merge strategies, port order (Skills → CLAUDE.md → Agents), cautions for preserving Downstream-specific content, and verification checklist. Estimated effort: 2-2.5 hours
 
 ### Changed
@@ -21,7 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **All 6 skills**: Renamed ACTIVATE → SIGN IN, PAUSE → TIME OUT, HANDOFF → SIGN OUT. All checklist references now point to canonical names in agent files
 
 ### Fixed
-<!-- Dev adds bug fixes here -->
+- **tools/dashboard.py**: Removed unused `Tuple` import [W-1], refactored 299-line `render_terminal()` into 13 focused `_term_*` section functions matching the HTML renderer's pattern [W-4]
+- **Repository hygiene**: Deleted stale `tools/__pycache__/` [W-2] and empty `firebase-debug.log` [W-3]
+- **.gitignore**: Fixed agent memory pattern from `.claude/agent-memory/*/` to `.claude/agent-memory/` to correctly exclude all nested files [S-3]
+- **requirements.txt**: Added optional dependency declaration for `rich>=13.0.0` (only needed for terminal mode) [S-1]
 
 ### Security
 <!-- QA adds security fixes here -->
