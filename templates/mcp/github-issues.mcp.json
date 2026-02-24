@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "github-issues": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/github-mcp-server"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}",
+        "GITHUB_OWNER": "${GITHUB_OWNER}",
+        "GITHUB_REPO": "${GITHUB_REPO}"
+      }
+    }
+  }
+}

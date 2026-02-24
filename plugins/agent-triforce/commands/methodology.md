@@ -91,3 +91,6 @@ When normal operations fail, switch to READ-DO error recovery. Step 1 is always 
 | `/security-audit` | Centinela | Deep security audit |
 | `/code-health` | Centinela | Dead code, tech debt, hygiene |
 | `/release-check` | Centinela | Pre-release verification gate |
+| `/generate-tests` | Forja | Generate tests for a module or function |
+| `/checklist-health` | Centinela | Analyze checklist effectiveness and evolution |
+| `/simulate-failure` | Centinela | Non-Normal procedure training simulation |

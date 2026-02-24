@@ -1,0 +1,22 @@
+{
+  "servers": [
+    {
+      "language": "rust",
+      "command": "rust-analyzer",
+      "args": [],
+      "rootUri": "${workspaceFolder}",
+      "initializationOptions": {
+        "cargo": {
+          "buildScripts": { "enable": true },
+          "features": "all"
+        },
+        "checkOnSave": {
+          "command": "clippy"
+        },
+        "procMacro": {
+          "enable": true
+        }
+      }
+    }
+  ]
+}

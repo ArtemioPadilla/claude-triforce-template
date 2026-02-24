@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "sonarqube": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/sonarqube-mcp-server"],
+      "env": {
+        "SONARQUBE_URL": "${SONARQUBE_URL}",
+        "SONARQUBE_TOKEN": "${SONARQUBE_TOKEN}",
+        "SONARQUBE_PROJECT_KEY": "${SONARQUBE_PROJECT_KEY}"
+      }
+    }
+  }
+}

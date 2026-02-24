@@ -1,0 +1,29 @@
+# .agentignore -- Files excluded from security scanner
+# Uses gitignore-style glob patterns.
+# Paths matching these patterns will not be scanned by the PreToolUse hook.
+
+# Test fixtures and mock data
+tests/fixtures/*
+tests/mocks/*
+**/test_fixtures/*
+**/mock_data/*
+**/__mocks__/*
+
+# Generated files
+*.generated.*
+*.min.js
+*.min.css
+*.bundle.js
+
+# Documentation examples (may contain intentional "bad" patterns)
+docs/examples/*
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+poetry.lock
+Pipfile.lock
+
+# Security patterns file itself (contains regex patterns, not real secrets)
+src/security/patterns.json

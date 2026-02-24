@@ -1,0 +1,94 @@
+# Agent Triforce -- Security Audit on Push
+# Runs a full /security-audit on changed files when pushing to main.
+# Saves the audit report as a GitHub Actions artifact.
+#
+# Installation:
+#   Copy this file to .github/workflows/security-audit.yml
+#
+# Requirements:
+#   - ANTHROPIC_API_KEY secret set in your repository
+#   - Claude Code GitHub Action (anthropic/claude-code-action@v1)
+
+name: "Agent Triforce: Security Audit"
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  security-audit:
+    name: Centinela Security Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Get changed files
+        id: changed
+        run: |
+          FILES=$(git diff --name-only HEAD~1 HEAD | tr '\n' ' ')
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+          echo "Changed files: $FILES"
+
+      - name: Run Security Audit
+        id: audit
+        uses: anthropic/claude-code-action@v1
+        with:
+          model: claude-haiku-4-5-20250514
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            You are Centinela (QA) from the Agent Triforce system running a security audit in CI.
+            Perform a comprehensive security audit on the following changed files:
+            ${{ steps.changed.outputs.files }}
+
+            Audit scope (OWASP Top 10 focus):
+            1. Injection flaws (SQL, NoSQL, OS command, LDAP)
+            2. Broken authentication patterns
+            3. Sensitive data exposure (hardcoded secrets, unencrypted PII)
+            4. XML external entities (XXE)
+            5. Broken access control
+            6. Security misconfiguration
+            7. Cross-site scripting (XSS)
+            8. Insecure deserialization
+            9. Using components with known vulnerabilities
+            10. Insufficient logging and monitoring
+
+            Also check:
+            - Dependency direction (no business logic depending on frameworks)
+            - Layer separation (no infrastructure concerns in domain layer)
+            - Test coverage for security-critical paths
+
+            Output a structured report with:
+            - Finding ID (format: [C-N] for critical, [W-N] for warning, [S-N] for suggestion)
+            - Severity, file, line, description, remediation
+            - Summary with total counts by severity
+            - Verdict: APPROVED | APPROVED WITH CONDITIONS | CHANGES REQUIRED
+
+      - name: Save audit report
+        if: always()
+        run: |
+          mkdir -p audit-reports
+          DATE=$(date -u +%Y-%m-%d)
+          cat > "audit-reports/security-audit-${DATE}.md" << 'REPORT_EOF'
+          # Security Audit Report
+          **Date**: $(date -u +%Y-%m-%d)
+          **Trigger**: Push to main
+          **Commit**: ${{ github.sha }}
+
+          ${{ steps.audit.outputs.result }}
+          REPORT_EOF
+
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-audit-report
+          path: audit-reports/
+          retention-days: 90

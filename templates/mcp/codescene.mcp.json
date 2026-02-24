@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "codescene": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/codescene-mcp-server"],
+      "env": {
+        "CODESCENE_URL": "${CODESCENE_URL}",
+        "CODESCENE_TOKEN": "${CODESCENE_TOKEN}",
+        "CODESCENE_PROJECT_ID": "${CODESCENE_PROJECT_ID}"
+      }
+    }
+  }
+}

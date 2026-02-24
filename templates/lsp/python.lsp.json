@@ -1,0 +1,20 @@
+{
+  "servers": [
+    {
+      "language": "python",
+      "command": "pylsp",
+      "args": [],
+      "rootUri": "${workspaceFolder}",
+      "initializationOptions": {
+        "pylsp": {
+          "plugins": {
+            "pycodestyle": { "enabled": true },
+            "pyflakes": { "enabled": true },
+            "pylsp_mypy": { "enabled": true, "live_mode": false },
+            "rope_autoimport": { "enabled": true }
+          }
+        }
+      }
+    }
+  ]
+}

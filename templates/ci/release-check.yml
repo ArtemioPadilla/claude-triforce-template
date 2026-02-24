@@ -1,0 +1,146 @@
+# Agent Triforce -- Release Check on Tag
+# Runs /release-check when a version tag is pushed.
+# Attaches the go/no-go report to the GitHub release.
+# Blocks the release if the verdict is NO-GO.
+#
+# Installation:
+#   Copy this file to .github/workflows/release-check.yml
+#
+# Requirements:
+#   - ANTHROPIC_API_KEY secret set in your repository
+#   - Claude Code GitHub Action (anthropic/claude-code-action@v1)
+#   - Tags follow semver format: v*
+
+name: "Agent Triforce: Release Check"
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release-check:
+    name: Release Readiness Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version
+        id: version
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Release version: $VERSION"
+
+      - name: Run Release Check
+        id: check
+        uses: anthropic/claude-code-action@v1
+        with:
+          model: claude-sonnet-4-20250514
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            You are Centinela (QA) from the Agent Triforce system running a release readiness check.
+            Version: ${{ steps.version.outputs.version }}
+
+            Evaluate these 5 release criteria:
+
+            1. **Test Coverage** (threshold: 80%)
+               - Check for coverage reports: coverage/, htmlcov/, .coverage, coverage.xml, lcov.info
+               - Record actual % or "not measured"
+
+            2. **Security Scanner Status** (threshold: 0 Critical/High)
+               - Check docs/reviews/security-audit-trail.md for open findings
+               - Check most recent docs/reviews/security-audit-*.md
+
+            3. **CHANGELOG Completeness** (threshold: entry exists)
+               - Check CHANGELOG.md for entry under ## [Unreleased] or ## [${{ steps.version.outputs.version }}]
+
+            4. **Dependency Freshness** (threshold: 0 Critical CVEs)
+               - Check requirements.txt, package.json for known vulnerabilities
+
+            5. **Tech Debt Severity** (threshold: 0 P0/P1)
+               - Check TECH_DEBT.md for Critical/High active items
+
+            Calculate confidence score:
+            - For each passing criterion: min(actual/threshold, 1.0)
+            - Score = average * 100
+
+            Output a structured report with the criteria table, confidence score,
+            GO or NO-GO recommendation, and remediation steps for any failures.
+
+      - name: Save release report
+        if: always()
+        run: |
+          mkdir -p release-reports
+          DATE=$(date -u +%Y-%m-%d)
+          VERSION="${{ steps.version.outputs.version }}"
+          REPORT_FILE="release-reports/release-check-${VERSION}-${DATE}.md"
+          cat > "$REPORT_FILE" << REPORT_EOF
+          ${{ steps.check.outputs.result }}
+          REPORT_EOF
+          echo "report_file=$REPORT_FILE" >> "$GITHUB_OUTPUT"
+
+      - name: Upload release report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-check-report
+          path: release-reports/
+          retention-days: 365
+
+      - name: Attach report to release
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const result = `${{ steps.check.outputs.result }}`.replace(/`/g, '\\`');
+            const tagName = context.ref.replace('refs/tags/', '');
+
+            // Try to find or create the release
+            let release;
+            try {
+              const { data } = await github.rest.repos.getReleaseByTag({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag: tagName,
+              });
+              release = data;
+            } catch (e) {
+              const { data } = await github.rest.repos.createRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag_name: tagName,
+                name: tagName,
+                body: `## Release Check Report\n\n${result.substring(0, 65536)}`,
+                draft: true,
+              });
+              release = data;
+            }
+
+            if (release && !release.body?.includes('Release Check Report')) {
+              await github.rest.repos.updateRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: release.id,
+                body: release.body + `\n\n## Release Check Report\n\n${result.substring(0, 65536)}`,
+              });
+            }
+
+      - name: Enforce release gate
+        if: always()
+        run: |
+          RESULT="${{ steps.check.outputs.result }}"
+          if echo "$RESULT" | grep -qi "NO-GO"; then
+            echo "::error::Release check returned NO-GO. Release is blocked."
+            echo "Review the release check report for remediation steps."
+            exit 1
+          fi
+          echo "Release check passed. GO for release."

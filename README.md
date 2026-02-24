@@ -52,10 +52,15 @@ claude
 |-------|-------|-------------|
 | `/feature-spec` | Prometeo | Create a feature specification (tiered: S/M/L) |
 | `/implement-feature` | Forja | Implement a feature from its spec (TDD workflow) |
+| `/generate-tests` | Forja | Generate tests following FIRST + Arrange-Act-Assert |
 | `/review-findings` | Forja | Fix findings from a QA review |
+| `/reindex` | Forja | Rebuild codebase knowledge index |
 | `/security-audit` | Centinela | Deep OWASP security audit |
 | `/code-health` | Centinela | Dead code, tech debt, dependency scan |
-| `/release-check` | Centinela | Pre-release verification gate |
+| `/release-check` | Centinela | Pre-release verification gate with GO/NO-GO |
+| `/traceability` | Centinela | Spec-to-implementation traceability matrix |
+| `/checklist-health` | Centinela | Checklist evolution tracking and health report |
+| `/simulate-failure` | Centinela | Non-Normal procedure training (fire drills) |
 
 When installed as a plugin, skills are namespaced: `/agent-triforce:feature-spec`, etc.
 
@@ -97,12 +102,18 @@ Every agent follows established software engineering practices:
 
 ## Key Features
 
-- **Persistent Memory**: Each agent remembers decisions across sessions
+- **Persistent Memory**: Each agent remembers decisions across sessions, with cross-agent conflict detection
 - **Auto-formatting**: Dev agent auto-runs ruff/biome after every file edit
 - **Permission Enforcement**: PM can't edit code (plan mode), QA is read-only by default
+- **Security Scanner**: Pre-commit hook detects hardcoded secrets, SQL injection, XSS patterns
 - **System Dashboard**: HTML dashboard auto-generated after every agent session
-- **Dead Code Detection**: QA scans for dead code on every review
-- **Structured Handoffs**: Communication schedule with 6 defined handoff paths between agents
+- **Automated Handoffs**: Structured handoff artifacts generated at every agent boundary
+- **Approval Gates**: Formal plan and release gates between agents with audit trail
+- **Workflow Tracking**: `/status` command shows current phase, checklists, blockers
+- **Session Analytics**: Per-agent token usage, cost estimates, and performance tracking
+- **CI/CD Templates**: GitHub Actions workflows for PR review, security audit, release check
+- **Codebase Index**: Shared module map with dependency graph, hotspots, and signatures
+- **Smart Routing**: Per-skill model selection (Haiku/Sonnet/Opus) with cost estimates
 
 ## Project Structure
 
@@ -116,20 +127,38 @@ Every agent follows established software engineering practices:
 │   │   ├── prometeo-pm.md             # PM agent
 │   │   ├── forja-dev.md               # Dev agent
 │   │   └── centinela-qa.md            # QA agent
-│   └── skills/                        # 6 skill definitions
+│   └── skills/                        # 11 skill definitions
 ├── plugins/
 │   └── agent-triforce/               # Plugin marketplace package
 │       ├── .claude-plugin/plugin.json
 │       ├── agents/                    # symlinks → .claude/agents/
 │       ├── skills/                    # symlinks → .claude/skills/
-│       ├── commands/                  # setup, methodology, dashboard
-│       └── hooks/hooks.json           # auto-regenerate dashboard
+│       ├── commands/                  # 14 commands
+│       └── hooks/hooks.json           # security scanner, handoffs, dashboard
 ├── tools/
-│   └── dashboard.py                   # HTML/terminal system dashboard
+│   ├── dashboard.py                   # HTML/terminal system dashboard
+│   ├── security-scanner.py            # Pre-commit secret/vulnerability scanner
+│   ├── handoff-generator.py           # Structured handoff artifact generator
+│   ├── workflow-tracker.py            # Workflow state and progress tracker
+│   ├── gate-checker.py                # Plan/release approval gates
+│   ├── memory-sync.py                 # Cross-agent memory conflict detection
+│   ├── traceability.py                # Spec-to-implementation traceability
+│   ├── session-tracker.py             # Session analytics and cost tracking
+│   └── codebase-indexer.py            # Codebase knowledge index builder
+├── templates/
+│   ├── lsp/                           # LSP configs (Python, TypeScript, Rust)
+│   ├── mcp/                           # MCP configs (SonarQube, Linear, Jira)
+│   ├── ci/                            # GitHub Actions workflow templates
+│   ├── agent-routing.json             # Per-skill model routing
+│   └── context-profiles.json          # Context loading profiles
 ├── docs/
 │   ├── specs/                         # Feature specifications (PM)
 │   ├── adr/                           # Architecture Decision Records (Dev)
-│   └── reviews/                       # Code reviews & audits (QA)
+│   ├── reviews/                       # Code reviews & audits (QA)
+│   ├── handoffs/                      # Handoff artifacts between agents
+│   ├── gates/                         # Approval gate documents
+│   ├── traceability/                  # Spec-to-code matrices
+│   └── training/                      # Simulation training reports
 ├── src/                               # Source code
 └── tests/                             # Tests
 ```

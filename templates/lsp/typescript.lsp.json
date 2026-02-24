@@ -1,0 +1,23 @@
+{
+  "servers": [
+    {
+      "language": "typescript",
+      "command": "typescript-language-server",
+      "args": ["--stdio"],
+      "rootUri": "${workspaceFolder}",
+      "initializationOptions": {
+        "preferences": {
+          "includeCompletionsForImportStatements": true,
+          "includeCompletionsWithSnippetText": true
+        }
+      },
+      "settings": {
+        "typescript": {
+          "format": {
+            "semicolons": "insert"
+          }
+        }
+      }
+    }
+  ]
+}

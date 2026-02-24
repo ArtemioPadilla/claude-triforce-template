@@ -1,0 +1,57 @@
+{
+  "version": "1.0.0",
+  "description": "Agent Triforce model routing configuration. Assigns cost-appropriate models to each skill type. Use 'inherit' to use the user's default model.",
+  "routing": {
+    "code-health": {
+      "model": "haiku",
+      "reason": "Routine scan, cost-efficient"
+    },
+    "security-audit": {
+      "model": "sonnet",
+      "reason": "Security requires thoroughness"
+    },
+    "feature-spec": {
+      "model": "sonnet",
+      "reason": "Specs need careful reasoning"
+    },
+    "implement-feature": {
+      "model": "inherit",
+      "reason": "Use user's default model"
+    },
+    "release-check": {
+      "model": "haiku",
+      "reason": "Checklist verification, cost-efficient"
+    },
+    "review-findings": {
+      "model": "inherit",
+      "reason": "Fix complexity varies"
+    },
+    "generate-tests": {
+      "model": "sonnet",
+      "reason": "Test design needs reasoning"
+    }
+  },
+  "costEstimates": {
+    "haiku": {
+      "inputPer1M": 0.25,
+      "outputPer1M": 1.25
+    },
+    "sonnet": {
+      "inputPer1M": 3.0,
+      "outputPer1M": 15.0
+    },
+    "opus": {
+      "inputPer1M": 15.0,
+      "outputPer1M": 75.0
+    }
+  },
+  "averageTokensPerSkill": {
+    "code-health": { "input": 8000, "output": 3000 },
+    "security-audit": { "input": 15000, "output": 5000 },
+    "feature-spec": { "input": 10000, "output": 6000 },
+    "implement-feature": { "input": 20000, "output": 10000 },
+    "release-check": { "input": 8000, "output": 2000 },
+    "review-findings": { "input": 12000, "output": 5000 },
+    "generate-tests": { "input": 12000, "output": 8000 }
+  }
+}

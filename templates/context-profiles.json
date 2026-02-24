@@ -1,0 +1,131 @@
+{
+  "version": "1.0.0",
+  "description": "Context loading profiles for Agent Triforce skills. Each profile defines which sections of CLAUDE.md, agent files, and memory to load for a given skill, reducing token usage for routine tasks.",
+  "profiles": {
+    "code-health": {
+      "agent": "centinela-qa",
+      "claude_md_sections": [
+        "Code Standards",
+        "Tech Stack Preferences",
+        "File Locations"
+      ],
+      "agent_sections": [
+        "Core Responsibilities",
+        "Checklists"
+      ],
+      "memory": "last_5_entries",
+      "skip": [
+        "Methodology",
+        "Communication Schedule",
+        "Workflow Rules"
+      ],
+      "estimated_token_reduction": "35%"
+    },
+    "security-audit": {
+      "agent": "centinela-qa",
+      "claude_md_sections": [
+        "Code Standards",
+        "Tech Stack Preferences",
+        "File Locations",
+        "Software Engineering Principles"
+      ],
+      "agent_sections": [
+        "Core Responsibilities",
+        "Review Template",
+        "Review Dimensions",
+        "Checklists"
+      ],
+      "memory": "all",
+      "skip": [],
+      "estimated_token_reduction": "15%"
+    },
+    "feature-spec": {
+      "agent": "prometeo-pm",
+      "claude_md_sections": [
+        "Software Engineering Principles",
+        "Project Conventions",
+        "File Locations"
+      ],
+      "agent_sections": [
+        "Core Responsibilities",
+        "Spec Templates",
+        "Checklists"
+      ],
+      "memory": "all",
+      "skip": [
+        "Code Standards",
+        "Tech Stack Preferences"
+      ],
+      "estimated_token_reduction": "25%"
+    },
+    "implement-feature": {
+      "agent": "forja-dev",
+      "claude_md_sections": "all",
+      "agent_sections": "all",
+      "memory": "all",
+      "skip": [],
+      "estimated_token_reduction": "0%"
+    },
+    "generate-tests": {
+      "agent": "forja-dev",
+      "claude_md_sections": [
+        "Code Standards",
+        "Tech Stack Preferences",
+        "Software Engineering Principles"
+      ],
+      "agent_sections": [
+        "Engineering Principles",
+        "Checklists"
+      ],
+      "memory": "last_5_entries",
+      "skip": [
+        "Architecture Design",
+        "Communication Schedule"
+      ],
+      "estimated_token_reduction": "30%"
+    },
+    "release-check": {
+      "agent": "centinela-qa",
+      "claude_md_sections": "all",
+      "agent_sections": "all",
+      "memory": "all",
+      "skip": [],
+      "estimated_token_reduction": "0%"
+    },
+    "checklist-health": {
+      "agent": "centinela-qa",
+      "claude_md_sections": [
+        "Checklist Methodology"
+      ],
+      "agent_sections": [
+        "Checklists"
+      ],
+      "memory": "none",
+      "skip": [
+        "Code Standards",
+        "Tech Stack Preferences",
+        "Software Engineering Principles",
+        "Project Conventions"
+      ],
+      "estimated_token_reduction": "45%"
+    },
+    "simulate-failure": {
+      "agent": "centinela-qa",
+      "claude_md_sections": [
+        "Checklist Methodology",
+        "Workflow Rules"
+      ],
+      "agent_sections": "all",
+      "memory": "none",
+      "skip": [
+        "Code Standards",
+        "Tech Stack Preferences"
+      ],
+      "estimated_token_reduction": "30%"
+    }
+  },
+  "defaults": {
+    "full_context_flag": "--full-context",
+    "fallback": "load_all"
+  }
+}
