@@ -85,12 +85,12 @@ When normal operations fail, switch to READ-DO error recovery. Step 1 is always 
 
 | Skill | Agent | Purpose |
 |---|---|---|
-| `/feature-spec` | Prometeo | Create feature specifications |
-| `/implement-feature` | Forja | Implement features from specs |
-| `/review-findings` | Forja | Fix QA review findings |
-| `/security-audit` | Centinela | Deep security audit |
-| `/code-health` | Centinela | Dead code, tech debt, hygiene |
-| `/release-check` | Centinela | Pre-release verification gate |
-| `/generate-tests` | Forja | Generate tests for a module or function |
-| `/checklist-health` | Centinela | Analyze checklist effectiveness and evolution |
-| `/simulate-failure` | Centinela | Non-Normal procedure training simulation |
+| `/agent-triforce:feature-spec` | Prometeo | Create feature specifications |
+| `/agent-triforce:implement-feature` | Forja | Implement features from specs |
+| `/agent-triforce:review-findings` | Forja | Fix QA review findings |
+| `/agent-triforce:security-audit` | Centinela | Deep security audit |
+| `/agent-triforce:code-health` | Centinela | Dead code, tech debt, hygiene |
+| `/agent-triforce:release-check` | Centinela | Pre-release verification gate |
+| `/agent-triforce:generate-tests` | Forja | Generate tests for a module or function |
+| `/agent-triforce:checklist-health` | Centinela | Analyze checklist effectiveness and evolution |
+| `/agent-triforce:simulate-failure` | Centinela | Non-Normal procedure training simulation |

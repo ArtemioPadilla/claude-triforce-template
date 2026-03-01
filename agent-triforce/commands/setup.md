@@ -147,12 +147,12 @@ This project uses the Agent Triforce multi-agent development system:
 - "Use Centinela to audit [X]"
 
 Or use skills:
-- `/feature-spec [description]` — Create a feature specification
-- `/implement-feature [spec-name]` — Implement a feature from its spec
-- `/security-audit [scope]` — Run a security audit
-- `/code-health` — Scan for dead code and tech debt
-- `/release-check` — Pre-release verification gate
-- `/review-findings [review-file]` — Fix QA review findings
+- `/agent-triforce:feature-spec [description]` — Create a feature specification
+- `/agent-triforce:implement-feature [spec-name]` — Implement a feature from its spec
+- `/agent-triforce:security-audit [scope]` — Run a security audit
+- `/agent-triforce:code-health` — Scan for dead code and tech debt
+- `/agent-triforce:release-check` — Pre-release verification gate
+- `/agent-triforce:review-findings [review-file]` — Fix QA review findings
 
 ## Tech Stack Preferences
 
@@ -254,11 +254,12 @@ Files:
 
 Tech Stack: Python (FastAPI, pytest, ruff), TypeScript (Next.js, Vitest, Biome)
 
-MCP Integrations: None configured (run /setup to add later)
+MCP Integrations: None configured (run /agent-triforce:setup to add later)
 Agent Routing: Default (all agents use inherited model)
 
 Next steps:
-  1. Run `/feature-spec [your feature]` to create your first spec
-  2. Run `/implement-feature [spec-name]` to implement it
-  3. Run `/code-health` to scan your existing codebase
+  1. /agent-triforce:feature-spec [your feature] — Create your first feature specification
+  2. /agent-triforce:implement-feature [spec-name] — Implement a spec
+  3. /agent-triforce:code-health — Scan your existing codebase for tech debt
+  4. /agent-triforce:security-audit — Run a security audit on the current code
 ```

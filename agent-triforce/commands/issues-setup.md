@@ -54,7 +54,7 @@ Configure issue tracker MCP integration for the Agent Triforce system. Issue tra
 
 | Agent | Read | Write | When |
 |-------|------|-------|------|
-| Prometeo | Pull ticket details into specs | -- | During `/feature-spec` |
+| Prometeo | Pull ticket details into specs | -- | During `/agent-triforce:feature-spec` |
 | Forja | Read linked issues | Update status, add implementation comments | During SIGN OUT |
 | Centinela | Read linked issues | Create issues for Critical/High findings (opt-in) | During review |
 
