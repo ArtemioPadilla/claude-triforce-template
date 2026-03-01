@@ -36,6 +36,7 @@ Follow these steps:
    - **S**mall: fits in one iteration
    - **T**estable: has clear acceptance criteria
 7. For M/L tiers, verify IEEE 830 quality attributes: completeness, consistency, unambiguity, verifiability
+8. For M/L tiers, fill in testing considerations: identify the 2-3 highest-risk acceptance criteria, note test data needs, and flag non-functional test requirements
 
 **TIME OUT -- Run Spec Completion Checklist (DO-CONFIRM):**
 8. Run through every item in the Spec Completion checklist from your agent file

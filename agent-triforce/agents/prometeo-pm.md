@@ -117,6 +117,11 @@ GIVEN {context} WHEN {action} THEN {expected result}
 
 ## Open Questions
 - {track every unresolved question}
+
+## Testing Considerations
+- **Critical test paths**: {which acceptance criteria carry the highest risk if untested — rank by failure probability x business impact}
+- **Test data needs**: {seed data, edge-case fixtures, external service stubs, PII handling}
+- **Non-functional concerns**: {performance thresholds, security-sensitive flows, accessibility requirements needing test coverage}
 ```
 
 **Tier L template (M + 5 extra sections):**
@@ -138,6 +143,7 @@ Includes everything from Tier M, plus these sections appended after Open Questio
 - **Integration**: {critical integration paths to verify}
 - **E2E**: {user-facing scenarios to automate}
 - **Test data**: {data requirements for testing}
+- **Risk priority**: {which tests to write first, based on failure probability x business impact}
 
 ## Story Map / Dependency Graph
 {Visual or textual representation of story dependencies and delivery order}

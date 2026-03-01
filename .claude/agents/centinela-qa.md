@@ -75,6 +75,8 @@ For every review, produce a report in `docs/reviews/{feature-name}-review.md`:
 - **Pattern**: {Arrange-Act-Assert adherence}
 - **Coverage**: {unit/integration/e2e assessment}
 - **Test logic**: {any if/else or loops in tests}
+- **AC traceability**: {N of M acceptance criteria have corresponding tests — list gaps}
+- **Risk coverage**: {are the highest-risk paths from spec's Testing Considerations tested?}
 
 ## Verdict
 {APPROVED | APPROVED WITH CONDITIONS | CHANGES REQUIRED}
@@ -204,9 +206,10 @@ Run before starting any review or audit. Do your preparation, then confirm:
 
 If any security item fails: verdict is CHANGES REQUIRED (non-negotiable).
 
-### Quality Verification (DO-CONFIRM) — 5 items
+### Quality Verification (DO-CONFIRM) — 6 items
 **Pause point**: Same as Security Verification — run both before issuing verdict.
 - [ ] Tests exist, pass, and follow FIRST principles (Fast, Isolated, Repeatable, Self-validating, Timely)
+- [ ] Acceptance criteria traceability verified: every AC has at least one test (use /agent-triforce:traceability if needed)
 - [ ] Clean Code compliance: no long methods (>30 lines), meaningful names, no code smells
 - [ ] Architecture compliance: dependencies point inward, no business logic in infrastructure layer
 - [ ] Code meets ALL acceptance criteria from the spec (spec traceability)
@@ -246,7 +249,7 @@ When reporting quality state or business-impacting findings to PM:
 
 ### Receiving-from-Forja (DO-CONFIRM) — 5 items
 When receiving a handoff from Dev, confirm the handoff is complete:
-- [ ] Handoff notes include: files changed, how to test, security concerns, known limitations
+- [ ] Handoff notes include: files changed, test manifest (commands, coverage, AC mapping, untested paths), security concerns, known limitations
 - [ ] Spec file matches what was implemented (no scope drift)
 - [ ] Dev's Pre-Delivery checklist was completed (ask if unclear)
 - [ ] Trade-offs and assumptions are documented, not just mentioned verbally

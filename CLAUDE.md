@@ -80,7 +80,7 @@ QA  ⏸️ SIGN IN → scan → ⏸️ TIME OUT: Scan Complete → ⏸️ SIGN O
 |---|---|---|---|
 | Prometeo | Forja | Spec complete | Spec path, priority, constraints, open questions needing Dev input |
 | Forja | Prometeo | Spec ambiguity during implementation | Specific ambiguities, proposed assumptions, blocking vs non-blocking |
-| Forja | Centinela | Implementation complete | Files changed, how to test, security concerns, known limitations |
+| Forja | Centinela | Implementation complete | Files changed, test manifest (coverage, AC mapping), security concerns, known limitations |
 | Centinela | Forja | Review complete | Verdict, findings by priority, fix order recommendation |
 | Centinela | Prometeo | Business-impacting findings | Quality state, release recommendation, product decisions needed |
 | Any agent | User | On ambiguity | Concrete options with trade-offs (never guess) |
@@ -152,6 +152,7 @@ These principles guide all agents. They are a shared design compass — not rigi
 - QA reviews: `docs/reviews/{feature-name}-review.md`
 - Source code: `src/`
 - Tests: `tests/`
+- Test strategy template: `templates/test-strategy.md`
 
 ### Git Conventions
 - Branches: `{type}/{ticket-short-description}` (feat/, fix/, refactor/, docs/, test/)

@@ -26,6 +26,7 @@ Follow these steps:
    a. **Red**: Write a failing test that describes the expected behavior (Arrange-Act-Assert)
    b. **Green**: Write minimal code to make the test pass
    c. **Refactor**: Clean up — extract methods, improve names, remove duplication
+   d. Verify each acceptance criterion from the spec has at least one test — if not, write one before proceeding
 5. Implement infrastructure/adapters and write integration tests for critical paths
 6. Scan for and remove any dead code you introduced or found
 

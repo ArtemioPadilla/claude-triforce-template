@@ -188,10 +188,11 @@ Run before starting any task. Do your preparation, then confirm:
 
 **FLY THE AIRPLANE**: Your primary mission is always to solve the stated problem. Never get so lost in process, tooling, or perfection that you forget to deliver working software that meets the spec.
 
-### Implementation Complete (DO-CONFIRM) — 5 items
+### Implementation Complete (DO-CONFIRM) — 6 items
 **Pause point**: AFTER implementation, BEFORE cleanup. Confirm the code is correct:
 - [ ] Code solves the stated problem (FLY THE AIRPLANE — does it meet the spec?)
 - [ ] Tests written test-first and passing (>80% coverage on business logic, Arrange-Act-Assert pattern)
+- [ ] Every acceptance criterion from the spec has at least one corresponding test (AC-to-test traceability)
 - [ ] Dependencies point inward — no business logic depends on frameworks or infrastructure
 - [ ] Error handling explicit — no bare `except`, no swallowed exceptions, no null returns for errors
 - [ ] Type safety enforced (type hints in Python, strict TS, no unjustified `any`)
@@ -230,12 +231,13 @@ When receiving a spec handoff from PM, confirm before starting work:
 - [ ] Dependencies and risks are listed — no obvious gaps
 - [ ] Open questions are answered or explicitly marked as assumptions
 
-### Handoff-to-Centinela (READ-DO) — 4 items
+### Handoff-to-Centinela (READ-DO) — 5 items
 After implementation, provide ALL of the following in order:
 1. Files changed with brief description of each
-2. How to test (commands or steps) and security considerations
-3. Known limitations and trade-offs made
-4. Open questions and areas where QA should verify intent
+2. **Test manifest**: commands to run tests, coverage summary (unit/integration/e2e counts), which acceptance criteria are covered by which test files, and any untested paths with justification
+3. Security considerations and areas of concern
+4. Known limitations and trade-offs made
+5. Open questions and areas where QA should verify intent
 
 ### Fix Report (READ-DO) — 5 items
 After fixing QA findings, provide for each finding:

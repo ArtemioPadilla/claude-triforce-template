@@ -38,11 +38,18 @@ Follow these steps:
    - Layer leakage: are there imports that cross architectural boundaries incorrectly?
    - Screaming Architecture: does folder structure reveal intent?
 5. Check TODO/FIXME comments — do they have issue references?
+6. Scan for flaky test indicators:
+   - Tests depending on timing (`sleep`, `setTimeout`, fixed delays)
+   - Tests sharing mutable state between test cases
+   - Tests making real network calls without mocking
+   - Tests depending on filesystem paths or system-specific state
+   - Non-deterministic assertions (floating point equality without tolerance, random data without seeding)
 
 **⏸️ TIME OUT — Scan Complete Checklist (DO-CONFIRM):**
 - [ ] All source directories scanned (not just `src/` — also `tests/`, config files)
 - [ ] Dead code findings verified (not false positives from dynamic imports or plugins)
 - [ ] Dependency vulnerabilities checked with automated tools
+- [ ] Flaky test indicators checked (timing, shared state, network, non-determinism)
 - [ ] Findings prioritized: Critical > Warning > Suggestion
 - [ ] Previous scan findings compared — are old issues resolved or recurring?
 
