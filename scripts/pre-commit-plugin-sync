@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Git pre-commit hook: warns if plugin files are out of sync with canonical sources.
+# Install: cp scripts/pre-commit-plugin-sync .git/hooks/pre-commit
+#   or:    ln -sf ../../scripts/pre-commit-plugin-sync .git/hooks/pre-commit
+
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+# Only check if any canonical files are staged
+staged_files=$(git diff --cached --name-only)
+needs_check=false
+
+while IFS= read -r file; do
+  case "$file" in
+    .claude/agents/*|.claude/skills/*|tools/*.py)
+      needs_check=true
+      break
+      ;;
+  esac
+done <<< "$staged_files"
+
+if $needs_check; then
+  if ! "$REPO_ROOT/scripts/sync-plugin.sh" --check; then
+    echo ""
+    echo "Plugin files are out of sync with canonical sources."
+    echo "Run: ./scripts/sync-plugin.sh"
+    echo "Then: git add plugins/agent-triforce/"
+    exit 1
+  fi
+fi
