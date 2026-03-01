@@ -5,15 +5,14 @@
   },
   "metadata": {
     "description": "3-agent development system (PM/Dev/QA) with robust methodology",
-    "version": "1.1.0",
-    "pluginRoot": "./plugins"
+    "version": "1.2.0"
   },
   "plugins": [
     {
       "name": "agent-triforce",
-      "source": "./agent-triforce",
+      "source": "./plugins/agent-triforce",
       "description": "Prometeo (PM) + Forja (Dev) + Centinela (QA) with robust methodology for software development projects",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "author": {
         "name": "Artemio Padilla"
       },
