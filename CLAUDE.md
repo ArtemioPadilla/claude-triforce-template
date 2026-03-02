@@ -22,6 +22,7 @@ Or use skills:
 - `/code-health` → Runs with Centinela
 - `/release-check` → Runs with Centinela
 - `/review-findings [review-file]` → Runs with Forja
+- `/business-review [feature-name]` → Runs with Prometeo
 
 ## Checklist Methodology
 
@@ -150,6 +151,7 @@ These principles guide all agents. They are a shared design compass — not rigi
 - Feature specs: `docs/specs/{feature-name}.md`
 - Architecture Decision Records: `docs/adr/ADR-{NNN}-{title}.md`
 - QA reviews: `docs/reviews/{feature-name}-review.md`
+- Business reviews: `docs/reviews/business-review-{feature}-{date}.md`
 - Source code: `src/`
 - Tests: `tests/`
 - Test strategy template: `templates/test-strategy.md`

@@ -34,6 +34,7 @@ declare -a SKILLS=(
   "simulate-failure"
   "traceability"
   "reindex"
+  "business-review"
 )
 
 declare -a TOOLS=(
