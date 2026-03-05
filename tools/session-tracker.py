@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -176,7 +177,6 @@ def _count_findings() -> Dict[str, int]:
     }
     if not REVIEW_DIR.exists():
         return counts
-    import re
     for path in REVIEW_DIR.glob("*.md"):
         if path.name.lower() == "readme.md":
             continue
@@ -186,11 +186,12 @@ def _count_findings() -> Dict[str, int]:
             continue
         finding_count = len(set(re.findall(r"\*\*\[[CWS]-\d+\]\*\*", text)))
         if finding_count > 0:
-            # Security audits and code-health are from Centinela
-            if "security" in path.name or "code-health" in path.name or "release" in path.name:
+            if "business-review" in path.name:
+                counts["prometeo-pm"] += finding_count
+            elif "security" in path.name or "code-health" in path.name or "release" in path.name:
                 counts["centinela-qa"] += finding_count
             else:
-                counts["centinela-qa"] += finding_count
+                counts["forja-dev"] += finding_count
     return counts
 
 
