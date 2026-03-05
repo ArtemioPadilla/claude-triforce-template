@@ -29,6 +29,30 @@ Track all known technical debt. Updated by both Dev (Forja) and QA (Centinela) a
   - `triforce.json` manifest tracks version and file strategies
   - Zero external dependencies — pure bash
 
+### [TD-002] `_find_project_root()` duplicated verbatim across all 8 tool files
+- **Type**: Code
+- **Severity**: Medium
+- **Found**: 2026-03-05
+- **Estimated effort**: S (1-2 hours)
+- **Impact if not fixed**: Any change to project root detection logic requires 8 file edits. High risk of version drift between tools over time.
+- **Proposed fix**: Extract to `tools/_common.py` shared module (or `src/utils.py`) and import from there. All 8 tool files affected: dashboard.py, memory-sync.py, traceability.py, session-tracker.py, workflow-tracker.py, handoff-generator.py, gate-checker.py, security-scanner.py.
+
+### [TD-003] `_HtmlBuilder.open_page()` embeds ~440-line CSS stylesheet inline
+- **Type**: Code
+- **Severity**: Low
+- **Found**: 2026-03-05
+- **Estimated effort**: S (30 minutes)
+- **Impact if not fixed**: CSS is uneditable with syntax highlighting; the method is unmaintainable; future CSS changes risk introducing Python string escaping errors.
+- **Proposed fix**: Extract CSS to a module-level constant `_HTML_CSS = """..."""` in dashboard.py and reference it from `open_page()`. Reduces the method from ~440 lines to ~10 lines.
+
+### [TD-004] Zero test coverage for 5 of 8 tool files
+- **Type**: Test
+- **Severity**: Medium
+- **Found**: 2026-03-05
+- **Estimated effort**: L (1-2 days)
+- **Impact if not fixed**: Regressions in dashboard.py, workflow-tracker.py, session-tracker.py, memory-sync.py, traceability.py, and codebase-indexer.py go undetected. The session-tracker logic bug (H-1 in code-health-2026-03-05.md) would have been caught by a test.
+- **Proposed fix**: Add unit tests starting with session-tracker.py (has a confirmed logic bug) and workflow-tracker.py (stateful, high-risk of regressions). Dashboard parsing functions (parse_agents, parse_specs, etc.) are also good candidates for unit tests.
+
 ## Resolved Debt
 
 <!-- Move items here when fixed, add resolution date and how it was resolved -->
