@@ -29,13 +29,14 @@ Track all known technical debt. Updated by both Dev (Forja) and QA (Centinela) a
   - `triforce.json` manifest tracks version and file strategies
   - Zero external dependencies — pure bash
 
-### [TD-002] `_find_project_root()` duplicated verbatim across all 8 tool files
+### [TD-002] `_find_project_root()` duplicated verbatim across all 9 tool files
 - **Type**: Code
 - **Severity**: Medium
 - **Found**: 2026-03-05
+- **Updated**: 2026-03-07
 - **Estimated effort**: S (1-2 hours)
-- **Impact if not fixed**: Any change to project root detection logic requires 8 file edits. High risk of version drift between tools over time.
-- **Proposed fix**: Extract to `tools/_common.py` shared module (or `src/utils.py`) and import from there. All 8 tool files affected: dashboard.py, memory-sync.py, traceability.py, session-tracker.py, workflow-tracker.py, handoff-generator.py, gate-checker.py, security-scanner.py.
+- **Impact if not fixed**: Any change to project root detection logic requires 9 file edits. High risk of version drift between tools over time.
+- **Proposed fix**: Extract to `tools/_common.py` shared module (or `src/utils.py`) and import from there. All 9 tool files affected: dashboard.py, memory-sync.py, traceability.py, session-tracker.py, workflow-tracker.py, handoff-generator.py, gate-checker.py, security-scanner.py, growth-tracker.py.
 
 ### [TD-003] `_HtmlBuilder.open_page()` embeds ~440-line CSS stylesheet inline
 - **Type**: Code
@@ -45,15 +46,16 @@ Track all known technical debt. Updated by both Dev (Forja) and QA (Centinela) a
 - **Impact if not fixed**: CSS is uneditable with syntax highlighting; the method is unmaintainable; future CSS changes risk introducing Python string escaping errors.
 - **Proposed fix**: Extract CSS to a module-level constant `_HTML_CSS = """..."""` in dashboard.py and reference it from `open_page()`. Reduces the method from ~440 lines to ~10 lines.
 
-### [TD-004] Test coverage gap for 3 of 8 tool files
+### [TD-004] Test coverage gap for 3 of 9 tool files
 - **Type**: Test
 - **Severity**: Medium
 - **Found**: 2026-03-05
 - **Updated**: 2026-03-07
 - **Estimated effort**: M (half day)
 - **Impact if not fixed**: Regressions in memory-sync.py, traceability.py, and codebase-indexer.py go undetected.
-- **Current state**: 5 of 8 tool files now have tests (session-tracker, workflow-tracker, dashboard parsing added 2026-03-07). The 5 tested files score 75-95% individually. Overall tools/ coverage is 43% due to 3 remaining untested files at 0% and dashboard rendering code (900+ lines of HTML/terminal output).
+- **Current state**: 6 of 9 tool files now have tests (session-tracker, workflow-tracker, dashboard parsing, growth-tracker added 2026-03-07). The 6 tested files score 75-95% individually. Overall tools/ coverage improved with growth-tracker at 35 tests. 3 remaining untested files at 0% and dashboard rendering code (900+ lines of HTML/terminal output).
 - **Proposed fix**: Add tests for memory-sync.py (conflict detection), traceability.py (criterion extraction), and codebase-indexer.py (module scanning). Dashboard rendering tests are lower priority (presentation layer).
+- **Coverage policy**: Per PM decision (2026-03-07), the 80% threshold applies to business-logic code only. Presentation-layer code (HTML/terminal rendering in dashboard.py) is exempt. Business-logic-only coverage across tested tools is estimated at 75-85%. The 3 remaining untested files are P2 — desirable but not release-blocking.
 
 ## Resolved Debt
 

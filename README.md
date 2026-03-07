@@ -2,7 +2,7 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/ArtemioPadilla/agent-triforce?style=flat-square)](https://github.com/ArtemioPadilla/agent-triforce/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.5.1-blue?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.6.0-blue?style=flat-square)](CHANGELOG.md)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-Plugin-blueviolet?style=flat-square)](https://claude.ai/code)
 [![Sponsor](https://img.shields.io/badge/sponsor-EA4AAA?style=flat-square&logo=github-sponsors&logoColor=white)](https://github.com/sponsors/ArtemioPadilla)
 
@@ -116,6 +116,7 @@ Every agent follows established software engineering practices:
 - **CI/CD Templates**: GitHub Actions workflows for PR review, security audit, release check
 - **Codebase Index**: Shared module map with dependency graph, hotspots, and signatures
 - **Smart Routing**: Per-skill model selection (Haiku/Sonnet/Opus) with cost estimates
+- **Growth Tracking**: Pre-launch readiness gates, milestone-gated actions, weekly metrics log
 
 ## Project Structure
 
@@ -130,13 +131,12 @@ Every agent follows established software engineering practices:
 │   │   ├── forja-dev.md               # Dev agent
 │   │   └── centinela-qa.md            # QA agent
 │   └── skills/                        # 11 skill definitions
-├── plugins/
-│   └── agent-triforce/               # Plugin marketplace package
-│       ├── .claude-plugin/plugin.json
-│       ├── agents/                    # symlinks → .claude/agents/
-│       ├── skills/                    # symlinks → .claude/skills/
-│       ├── commands/                  # 14 commands
-│       └── hooks/hooks.json           # security scanner, handoffs, dashboard
+├── agent-triforce/                    # Plugin marketplace package
+│   ├── agents/                        # Agent configurations
+│   ├── skills/                        # Skill definitions
+│   ├── commands/                      # 15 commands
+│   ├── hooks/                         # security scanner, handoffs, dashboard
+│   └── tools/                         # Tool scripts
 ├── tools/
 │   ├── dashboard.py                   # HTML/terminal system dashboard
 │   ├── security-scanner.py            # Pre-commit secret/vulnerability scanner
@@ -146,6 +146,7 @@ Every agent follows established software engineering practices:
 │   ├── memory-sync.py                 # Cross-agent memory conflict detection
 │   ├── traceability.py                # Spec-to-implementation traceability
 │   ├── session-tracker.py             # Session analytics and cost tracking
+│   ├── growth-tracker.py              # Growth phase tracking and readiness gates
 │   └── codebase-indexer.py            # Codebase knowledge index builder
 ├── templates/
 │   ├── lsp/                           # LSP configs (Python, TypeScript, Rust)

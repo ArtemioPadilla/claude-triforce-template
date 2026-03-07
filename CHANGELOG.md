@@ -5,15 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-### Planned
-- **Future Roadmap**: 25-year strategic planning document using Amazon's Working Backwards methodology. Covers 14 time horizons (Now through March 2051) with press releases, categorized goals ([PRODUCT]/[GROWTH]/[ECONOMICS]/[METHODOLOGY]/[ECOSYSTEM]/[CHORE]), confidence calibration, feedback loop design, pivot triggers, and category balance analysis. Near-term horizons are operational plans; far-term are visionary thesis with explicit uncertainty markers. The long arc: Plugin (2026) → Methodology standard (2028) → Industry practice (2031) → Foundational principle of AI-assisted development (2036+). See `docs/specs/future-roadmap.md`.
-- **Feature Roadmap**: Comprehensive 20-feature roadmap organized into 4 prioritized phases (P0-P3). Covers Agent Team Orchestration, Automated Handoff Protocol, Interactive Setup Wizard, LSP Integration, Security Scanner Hook, Static Analysis MCP, Workflow Visualization, Test Generation, Smart Routing, Approval Gates, Release Readiness Report, CI/CD Integration, Issue Tracker MCP, Cross-Agent Memory, Checklist Evolution, Live Dashboard Analytics, Traceability Matrix, Context-Efficient Spawning, Non-Normal Training Mode, and Codebase Knowledge Index. Includes dependency graph, competitive landscape analysis, and per-phase success metrics. See `docs/specs/feature-roadmap.md`.
-- **Plugin Promotion and Monetization Plan**: Comprehensive 4-phase promotion and monetization strategy for the Agent Triforce Claude Code plugin. Covers GitHub discovery infrastructure, content marketing (Show HN, Reddit, Twitter/X), community building (Product Hunt, Substack, YouTube), enterprise partnerships, GitHub Sponsors tiers, consulting offer ($1.5K–$20K), digital product packs, and enterprise licensing. See `docs/specs/plugin-promotion-plan.md`.
-- **Growth Plan**: Focused, sequenced adoption and growth strategy that complements the promotion plan. Covers pre-launch readiness gates, curated list resubmission strategy (with lessons from hesreallyhim PR #819 closure), Show HN and Reddit sequencing, organic GitHub discovery tactics, milestone-gated action items, and realistic solo-maintainer timeline. See `docs/specs/growth-plan.md`.
+## [0.6.0] - 2026-03-07
 
 ### Added
+- **Growth Tracker Tool**: Growth phase tracking and pre-launch readiness gate tool (`tools/growth-tracker.py`). Four subcommands: `status` (current growth phase and metrics), `check` (pre-launch readiness gates), `milestones` (milestone-gated action items), `log` (record weekly metrics to growth-log.md). Implements growth-plan.md Appendix A (8 readiness gates) and Appendix E (7 milestone thresholds). Phase determination: Pre-Launch (stars < 10 OR repo < 30 days), Soft Launch (10-50 stars), Content Momentum (50-200 stars), Community (200+ stars). New `/growth-check` command. Tests in `tests/test_growth_tracker.py` (35 tests).
+- **Strategic Planning Documents**: Three approved PM specs defining product direction. Feature Roadmap (`docs/specs/feature-roadmap.md`) — 20 features across 4 phases (all implemented). Future Roadmap (`docs/specs/future-roadmap.md`) — 25-year Working Backwards planning with 14 time horizons, categorized goals, and pivot triggers. Growth Plan (`docs/specs/growth-plan.md`) — sequenced adoption strategy with pre-launch gates, curated list resubmission strategy, Show HN/Reddit/Twitter sequencing, and milestone-gated actions.
 - **Test Suite for Session Tracker**: `tests/test_session_tracker.py` (30 tests) covering `_count_findings()` agent attribution routing (regression for H-1 fix), `_compute_handoffs()`, `_estimate_cost()`, `_build_report()`, pricing loaders, and CLI commands.
 - **Test Suite for Workflow Tracker**: `tests/test_workflow_tracker.py` (27 tests) covering serialization round-trips, file I/O, and all subcommands: start, phase, checklist, blocker add/resolve, complete, status, history.
 - **Test Suite for Dashboard Parsers**: `tests/test_dashboard.py` (41 tests) covering `_parse_frontmatter()`, `_parse_checklists()`, `parse_specs()`, `parse_reviews()`, `parse_tech_debt()`, `parse_changelog()`, `parse_adrs()`, `compute_health()`, and `_read_file_safe()`.
@@ -62,8 +58,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dashboard**: Added acceptance criteria count badge to pipeline kanban cards, "Next Step" summary in stats bar, renamed "What's Next" to "Recommended Next Steps"
 - **Dashboard**: Added project name to HTML `<title>`, page header, and terminal banner for multi-project disambiguation
 - **Dashboard**: Added trident emoji favicon to HTML dashboard
-
-### Changed
 - **Session Tracker**: Updated `DEFAULT_AGENT_MODELS` to assign `centinela-qa` to `sonnet` instead of `haiku`, matching actual agent model assignment and fixing underestimated cost reports (M-7)
 - **Security Scanner Tests**: Refactored 3 `try/except SystemExit` patterns to use idiomatic `pytest.raises` (L-6)
 
