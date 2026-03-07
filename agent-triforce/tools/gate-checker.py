@@ -45,8 +45,6 @@ from typing import Any, Dict, List, Optional
 # Constants
 # ---------------------------------------------------------------------------
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-
 
 def _find_project_root() -> Path:
     """Find the project root directory.

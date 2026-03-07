@@ -1247,6 +1247,7 @@ class _HtmlBuilder:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{page_title}</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔱</text></svg>">
 <style>
 :root {{
   --bg: {COLOR_BG_HEX};
@@ -1976,7 +1977,6 @@ tr:last-child td {{ border-bottom: none; }}
         self._w("</table>")
         # Per-agent breakdown
         self._w('<div class="cl-breakdown">')
-        agent_css_names = {"prometeo-pm": "prometeo", "forja-dev": "forja", "centinela-qa": "centinela"}
         for agent in data.agents:
             display = AGENT_DISPLAY_NAMES.get(agent.name, agent.name)
             color = AGENT_COLORS.get(agent.name, "#fff")

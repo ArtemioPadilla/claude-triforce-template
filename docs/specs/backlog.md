@@ -41,6 +41,15 @@ Living intake document for work items. Each item gets promoted to a spec (`docs/
 - **Status**: Open
 - **Ref**: `docs/reviews/code-health-2026-03-05.md` finding H-1
 
+### [B-009] MkDocs Material documentation site
+- **Type**: Feature
+- **Category**: [GROWTH]
+- **Priority**: P1
+- **Owner**: Forja
+- **AC**: `mkdocs serve` renders a polished docs site with landing page, quickstart, agent reference, skills catalog, workflow diagrams, and changelog. Deployed to GitHub Pages via `gh-pages` branch.
+- **Status**: Open
+- **Notes**: Solves B-005 (social preview — site becomes the shareable link), supports growth plan content marketing, and gives a proper URL for Show HN / Reddit / curated list submissions.
+
 ### [B-008] Clean install test on fresh machine
 - **Type**: Chore
 - **Category**: [CHORE]
@@ -69,6 +78,12 @@ Living intake document for work items. Each item gets promoted to a spec (`docs/
 - **Category**: [PRODUCT]
 - **Status**: Done (2026-03-05)
 - **Resolution**: Added `--no-open` flag, updated SubagentStop hook, added project name to title/header. Commit `0044d98`.
+
+### [B-007] Fix session-tracker dead branch (H-1)
+- **Type**: Bug
+- **Category**: [PRODUCT]
+- **Status**: Done (2026-03-05)
+- **Resolution**: Fixed `_count_findings()` to attribute findings to correct agent (forja-dev for general reviews, prometeo-pm for business reviews). Also moved `import re` to top-level. Commit `a035e89`.
 
 ### [B-004] Dashboard doesn't show requirements or future steps
 - **Type**: Bug

@@ -58,9 +58,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dashboard**: Added spec tier badge (S/M/L) to Feature Pipeline kanban cards in both HTML and terminal renderers
 - **Dashboard**: Added acceptance criteria count badge to pipeline kanban cards, "Next Step" summary in stats bar, renamed "What's Next" to "Recommended Next Steps"
 - **Dashboard**: Added project name to HTML `<title>`, page header, and terminal banner for multi-project disambiguation
+- **Dashboard**: Added trident emoji favicon to HTML dashboard
 
 ### Fixed
 - **Dashboard**: Added `--no-open` flag to prevent browser tab spam from SubagentStop hooks. Hook now generates HTML silently; manual `/dashboard` invocation still opens the browser.
+- **Dead code**: Removed unused `SCRIPT_DIR` constant from security-scanner.py, gate-checker.py, handoff-generator.py. Removed unused `agent_css_names` variable from dashboard.py.
 - **Version**: Corrected product version from 1.x.x to 0.x.x (0.5.0) across plugin.json, marketplace.json, and README badge — project is pre-1.0 stable release
 
 ### Security
