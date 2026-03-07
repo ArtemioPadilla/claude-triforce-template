@@ -32,15 +32,6 @@ Living intake document for work items. Each item gets promoted to a spec (`docs/
 - **AC**: ArtemioPadilla GitHub profile shows agent-triforce as a pinned repo
 - **Status**: Open
 
-### [B-007] Fix session-tracker dead branch (H-1)
-- **Type**: Bug
-- **Category**: [PRODUCT]
-- **Priority**: P1
-- **Owner**: Forja
-- **AC**: `_count_findings()` in `tools/session-tracker.py:188-193` correctly attributes findings to the right agent, not always centinela-qa
-- **Status**: Open
-- **Ref**: `docs/reviews/code-health-2026-03-05.md` finding H-1
-
 ### [B-009] MkDocs Material documentation site
 - **Type**: Feature
 - **Category**: [GROWTH]

@@ -67,7 +67,7 @@ TOKENS_PER_PHASE: Dict[str, int] = {
 DEFAULT_AGENT_MODELS: Dict[str, str] = {
     "prometeo-pm": "sonnet",
     "forja-dev": "sonnet",
-    "centinela-qa": "haiku",
+    "centinela-qa": "sonnet",
 }
 
 # ---------------------------------------------------------------------------

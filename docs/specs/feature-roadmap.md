@@ -1,9 +1,10 @@
 # Agent Triforce — Feature Roadmap
-**Status**: Draft
-**Version**: 0.1.0
+**Status**: Approved
+**Version**: 0.5.1
 **Date**: 2026-02-23
+**Updated**: 2026-03-07
 **Owner**: Prometeo (PM)
-**Next Review**: 2026-03-23
+**Next Review**: 2026-06-07
 
 ---
 
@@ -62,7 +63,7 @@ The core product thesis: Agent Triforce is the only Claude Code multi-agent syst
 ### F01 — Agent Team Orchestration Mode
 
 **ID**: F01
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P0-Critical
 **Complexity**: Medium
 **Classification**: Differentiator
@@ -117,7 +118,7 @@ THEN the system gracefully falls back to sequential single-agent mode with no er
 ### F02 — Automated Handoff Protocol with Structured Artifacts
 
 **ID**: F02
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P0-Critical
 **Complexity**: Medium
 **Classification**: Differentiator
@@ -172,7 +173,7 @@ THEN the directory is created automatically and a `.gitignore` entry is suggeste
 ### F03 — Interactive Setup Wizard (`/setup` Enhancement)
 
 **ID**: F03
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P0-Critical
 **Complexity**: Medium
 **Classification**: Table Stakes
@@ -240,7 +241,7 @@ THEN the wizard detects existing configuration, prompts for confirmation before 
 ### F04 — LSP Integration for Real-Time Code Intelligence
 
 **ID**: F04
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P1-High
 **Complexity**: Low
 **Classification**: Table Stakes
@@ -288,7 +289,7 @@ THEN the agent proceeds normally with a single informational note that LSP diagn
 ### F05 — Security Scanner Hook (Pre-Commit)
 
 **ID**: F05
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P1-High
 **Complexity**: Low
 **Classification**: Table Stakes
@@ -341,7 +342,7 @@ THEN subsequent writes to that file are not scanned by the security hook.
 ### F06 — Static Analysis MCP Integration
 
 **ID**: F06
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P1-High
 **Complexity**: Low
 **Classification**: Differentiator
@@ -390,7 +391,7 @@ THEN the finding is elevated to the top of the findings list in the review docum
 ### F07 — Workflow Visualization and Progress Tracking
 
 **ID**: F07
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P1-High
 **Complexity**: Medium
 **Classification**: Differentiator
@@ -438,7 +439,7 @@ THEN a summary shows all three agents' checklist pass/fail records, timestamps f
 ### F08 — Automated Test Generation Skill (`/generate-tests`)
 
 **ID**: F08
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P1-High
 **Complexity**: Low-Medium
 **Classification**: Table Stakes
@@ -486,7 +487,7 @@ THEN the generated tests use the framework idioms (pytest fixtures, `describe`/`
 ### F09 — Smart Agent Routing (Model Selection)
 
 **ID**: F09
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P1-High
 **Complexity**: Low-Medium
 **Classification**: Table Stakes
@@ -551,7 +552,7 @@ THEN that specific run uses Opus regardless of the routing configuration, and th
 ### F10 — Plan Approval Gates Between Agents
 
 **ID**: F10
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P2-Medium
 **Complexity**: Medium
 **Classification**: Differentiator
@@ -600,7 +601,7 @@ THEN the hook blocks the advancement and returns the gate document path with out
 ### F11 — Release Readiness Report Generator
 
 **ID**: F11
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P2-Medium
 **Complexity**: Low-Medium
 **Classification**: Differentiator
@@ -649,7 +650,7 @@ THEN the report includes a NO-GO recommendation, lists each failing criterion wi
 ### F12 — GitHub Actions / CI-CD Integration
 
 **ID**: F12
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P2-Medium
 **Complexity**: Low-Medium
 **Classification**: Table Stakes
@@ -698,7 +699,7 @@ THEN the `/release-check` workflow runs and its go/no-go result is attached to t
 ### F13 — Linear / Jira / GitHub Issues MCP Integration
 
 **ID**: F13
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P2-Medium
 **Complexity**: Low
 **Classification**: Table Stakes
@@ -750,7 +751,7 @@ THEN agents proceed normally with no error. Issue tracker integration is fully o
 ### F14 — Cross-Agent Persistent Memory with Conflict Detection
 
 **ID**: F14
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P2-Medium
 **Complexity**: Medium
 **Classification**: Differentiator
@@ -799,7 +800,7 @@ THEN the losing entry is archived (not deleted) in a `memory-archive/` directory
 ### F15 — Checklist Evolution System
 
 **ID**: F15
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P2-Medium
 **Complexity**: Medium-High
 **Classification**: Differentiator
@@ -863,7 +864,7 @@ THEN a suggested new checklist item is generated with wording following Boorman'
 ### F16 — Live Dashboard with Session Analytics
 
 **ID**: F16
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P3-Low
 **Complexity**: Medium-High
 **Classification**: Differentiator
@@ -912,7 +913,7 @@ THEN a `docs/analytics/session-{date}.json` file is generated in a documented sc
 ### F17 — Spec-to-Implementation Traceability Matrix
 
 **ID**: F17
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P3-Low
 **Complexity**: Medium-High
 **Classification**: Differentiator
@@ -962,7 +963,7 @@ THEN the criterion row is flagged with Status: "missing" and a note that `/gener
 ### F18 — Context-Efficient Agent Spawning
 
 **ID**: F18
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P3-Low
 **Complexity**: Medium
 **Classification**: Differentiator
@@ -1011,7 +1012,7 @@ THEN running the command with `--full-context` loads everything as before, with 
 ### F19 — Non-Normal Procedure Training Mode (`/simulate-failure`)
 
 **ID**: F19
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P3-Low
 **Complexity**: Medium
 **Classification**: Differentiator
@@ -1064,7 +1065,7 @@ THEN the report identifies exactly which checklist item was missed and provides 
 ### F20 — Codebase Knowledge Index
 
 **ID**: F20
-**Status**: Planned
+**Status**: Implemented
 **Priority**: P3-Low
 **Complexity**: High
 **Classification**: Differentiator

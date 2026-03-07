@@ -8,9 +8,9 @@ from __future__ import annotations
 
 import json
 import sys
-import textwrap
 from pathlib import Path
-from unittest.mock import patch
+
+import pytest
 
 # Ensure project root is importable
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -61,11 +61,9 @@ class TestLoadPatterns:
         missing = tmp_path / "nonexistent.json"
 
         # Act & Assert
-        try:
+        with pytest.raises(SystemExit) as exc_info:
             security_scanner.load_patterns(missing)
-            assert False, "Should have raised SystemExit"
-        except SystemExit as exc:
-            assert exc.code == 2
+        assert exc_info.value.code == 2
 
     def test_exits_on_invalid_json(self, tmp_path: Path) -> None:
         """GIVEN a file with invalid JSON
@@ -76,11 +74,9 @@ class TestLoadPatterns:
         bad_file.write_text("not json {{{")
 
         # Act & Assert
-        try:
+        with pytest.raises(SystemExit) as exc_info:
             security_scanner.load_patterns(bad_file)
-            assert False, "Should have raised SystemExit"
-        except SystemExit as exc:
-            assert exc.code == 2
+        assert exc_info.value.code == 2
 
     def test_exits_on_invalid_regex(self, tmp_path: Path) -> None:
         """GIVEN a patterns file with an invalid regex
@@ -99,11 +95,9 @@ class TestLoadPatterns:
         }))
 
         # Act & Assert
-        try:
+        with pytest.raises(SystemExit) as exc_info:
             security_scanner.load_patterns(patterns_file)
-            assert False, "Should have raised SystemExit"
-        except SystemExit as exc:
-            assert exc.code == 2
+        assert exc_info.value.code == 2
 
 
 # ---------------------------------------------------------------------------

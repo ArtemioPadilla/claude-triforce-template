@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Growth Plan**: Focused, sequenced adoption and growth strategy that complements the promotion plan. Covers pre-launch readiness gates, curated list resubmission strategy (with lessons from hesreallyhim PR #819 closure), Show HN and Reddit sequencing, organic GitHub discovery tactics, milestone-gated action items, and realistic solo-maintainer timeline. See `docs/specs/growth-plan.md`.
 
 ### Added
+- **Test Suite for Session Tracker**: `tests/test_session_tracker.py` (30 tests) covering `_count_findings()` agent attribution routing (regression for H-1 fix), `_compute_handoffs()`, `_estimate_cost()`, `_build_report()`, pricing loaders, and CLI commands.
+- **Test Suite for Workflow Tracker**: `tests/test_workflow_tracker.py` (27 tests) covering serialization round-trips, file I/O, and all subcommands: start, phase, checklist, blocker add/resolve, complete, status, history.
+- **Test Suite for Dashboard Parsers**: `tests/test_dashboard.py` (41 tests) covering `_parse_frontmatter()`, `_parse_checklists()`, `parse_specs()`, `parse_reviews()`, `parse_tech_debt()`, `parse_changelog()`, `parse_adrs()`, `compute_health()`, and `_read_file_safe()`.
 - **Quickstart Guide**: Step-by-step onboarding doc (`docs/quickstart.md`) covering plugin install, setup, and first feature spec in under 5 minutes. Linked from README.
 - **Growth Log**: Baseline tracking file (`docs/growth-log.md`) for weekly adoption metrics per growth plan Appendix E.
 - **`/business-review` Skill**: New PM-led post-implementation business assessment skill for Prometeo. Evaluates 5 areas: Success Metrics, Scope Compliance, AC Business Validation, Risk Review, and Product Decisions. Generates structured report with confidence score (0-100), verdict (APPROVED/CONDITIONALLY APPROVED/CHANGES REQUIRED), and Mermaid-based visual representations: Feature Timeline (Gantt chart showing spec→dev→QA→review lifecycle), Project Roadmap Status (timeline of all features by phase), Confidence Score Breakdown (pie chart), and Risk & Dependency Map (flowchart). Reports saved to `docs/reviews/business-review-{feature}-{date}.md`. New Business Verification checklist (6 items) added to Prometeo agent (7 checklists total). Closes the product loop: feature-spec → implement → QA → business-review → release.
@@ -60,7 +63,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dashboard**: Added project name to HTML `<title>`, page header, and terminal banner for multi-project disambiguation
 - **Dashboard**: Added trident emoji favicon to HTML dashboard
 
+### Changed
+- **Session Tracker**: Updated `DEFAULT_AGENT_MODELS` to assign `centinela-qa` to `sonnet` instead of `haiku`, matching actual agent model assignment and fixing underestimated cost reports (M-7)
+- **Security Scanner Tests**: Refactored 3 `try/except SystemExit` patterns to use idiomatic `pytest.raises` (L-6)
+
 ### Fixed
+- **Backlog**: Removed duplicate B-007 entry from the Open section (already resolved in commit a035e89)
 - **Dashboard**: Added `--no-open` flag to prevent browser tab spam from SubagentStop hooks. Hook now generates HTML silently; manual `/dashboard` invocation still opens the browser.
 - **Dead code**: Removed unused `SCRIPT_DIR` constant from security-scanner.py, gate-checker.py, handoff-generator.py. Removed unused `agent_css_names` variable from dashboard.py.
 - **Version**: Corrected product version from 1.x.x to 0.x.x (0.5.0) across plugin.json, marketplace.json, and README badge — project is pre-1.0 stable release

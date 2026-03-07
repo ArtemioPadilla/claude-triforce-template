@@ -45,13 +45,15 @@ Track all known technical debt. Updated by both Dev (Forja) and QA (Centinela) a
 - **Impact if not fixed**: CSS is uneditable with syntax highlighting; the method is unmaintainable; future CSS changes risk introducing Python string escaping errors.
 - **Proposed fix**: Extract CSS to a module-level constant `_HTML_CSS = """..."""` in dashboard.py and reference it from `open_page()`. Reduces the method from ~440 lines to ~10 lines.
 
-### [TD-004] Zero test coverage for 5 of 8 tool files
+### [TD-004] Test coverage gap for 3 of 8 tool files
 - **Type**: Test
 - **Severity**: Medium
 - **Found**: 2026-03-05
-- **Estimated effort**: L (1-2 days)
-- **Impact if not fixed**: Regressions in dashboard.py, workflow-tracker.py, session-tracker.py, memory-sync.py, traceability.py, and codebase-indexer.py go undetected. The session-tracker logic bug (H-1 in code-health-2026-03-05.md) would have been caught by a test.
-- **Proposed fix**: Add unit tests starting with session-tracker.py (has a confirmed logic bug) and workflow-tracker.py (stateful, high-risk of regressions). Dashboard parsing functions (parse_agents, parse_specs, etc.) are also good candidates for unit tests.
+- **Updated**: 2026-03-07
+- **Estimated effort**: M (half day)
+- **Impact if not fixed**: Regressions in memory-sync.py, traceability.py, and codebase-indexer.py go undetected.
+- **Current state**: 5 of 8 tool files now have tests (session-tracker, workflow-tracker, dashboard parsing added 2026-03-07). The 5 tested files score 75-95% individually. Overall tools/ coverage is 43% due to 3 remaining untested files at 0% and dashboard rendering code (900+ lines of HTML/terminal output).
+- **Proposed fix**: Add tests for memory-sync.py (conflict detection), traceability.py (criterion extraction), and codebase-indexer.py (module scanning). Dashboard rendering tests are lower priority (presentation layer).
 
 ## Resolved Debt
 
