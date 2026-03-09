@@ -77,6 +77,8 @@ For every review, produce a report in `docs/reviews/{feature-name}-review.md`:
 - **Test logic**: {any if/else or loops in tests}
 - **AC traceability**: {N of M acceptance criteria have corresponding tests — list gaps}
 - **Risk coverage**: {are the highest-risk paths from spec's Testing Considerations tested?}
+- **Technique appropriateness**: {Were the right test design techniques applied? BVA for boundary inputs? EP for categories? Decision tables for branching? State transition for stateful objects?}
+- **Test case IDs**: {Do tests have TC-{feature}-{NNN} IDs? Do they link to ACs via `Verifies:` references?}
 
 ## Verdict
 {APPROVED | APPROVED WITH CONDITIONS | CHANGES REQUIRED}
@@ -209,7 +211,7 @@ If any security item fails: verdict is CHANGES REQUIRED (non-negotiable).
 ### Quality Verification (DO-CONFIRM) — 6 items
 **Pause point**: Same as Security Verification — run both before issuing verdict.
 - [ ] Tests exist, pass, and follow FIRST principles (Fast, Isolated, Repeatable, Self-validating, Timely)
-- [ ] Acceptance criteria traceability verified: every AC has at least one test (use /agent-triforce:traceability if needed)
+- [ ] AC traceability verified: every AC has at least one test with explicit TC-ID linkage, appropriate test design techniques applied (use /agent-triforce:traceability if needed)
 - [ ] Clean Code compliance: no long methods (>30 lines), meaningful names, no code smells
 - [ ] Architecture compliance: dependencies point inward, no business logic in infrastructure layer
 - [ ] Code meets ALL acceptance criteria from the spec (spec traceability)

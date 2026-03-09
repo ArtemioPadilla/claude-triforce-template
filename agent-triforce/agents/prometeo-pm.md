@@ -120,9 +120,14 @@ GIVEN {context} WHEN {action} THEN {expected result}
 - {track every unresolved question}
 
 ## Testing Considerations
-- **Critical test paths**: {which acceptance criteria carry the highest risk if untested — rank by failure probability x business impact}
+- **Critical test paths**: {which ACs carry the highest risk if untested — rank by failure probability x impact}
+- **Recommended techniques per AC**:
+  - {AC-001}: {BVA — input ranges on X parameter}
+  - {AC-002}: {Decision Table — permission matrix for Y}
+  - {AC-003}: {State Transition — order lifecycle}
 - **Test data needs**: {seed data, edge-case fixtures, external service stubs, PII handling}
 - **Non-functional concerns**: {performance thresholds, security-sensitive flows, accessibility requirements needing test coverage}
+- **Integrity level**: {S: minimal | M: full suite | L: comprehensive with integration plan} (derived from spec tier)
 ```
 
 **Tier L template (M + 5 extra sections):**

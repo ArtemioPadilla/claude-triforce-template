@@ -130,11 +130,21 @@ These principles guide all agents. They are a shared design compass — not rigi
 - **DRY, YAGNI, KISS**: don't repeat, don't build unneeded things, keep it simple
 - **Error handling**: prefer exceptions over null returns, fail fast
 
-### Testing (FIRST Principles)
+### Testing (FIRST Principles + IEEE 829 Test Design)
 - **Fast, Isolated, Repeatable, Self-validating, Timely**
 - **Arrange-Act-Assert** pattern for every test
 - Unit tests for business logic (>80% coverage), integration tests for critical paths, e2e for user flows
 - No test logic: no if/else or loops in test code
+- **Test design techniques** (select based on code characteristics):
+  - **Boundary Value Analysis (BVA)**: for numeric inputs, ranges, limits — test at min, max, min-1, max+1
+  - **Equivalence Partitioning (EP)**: for categorical inputs (roles, statuses, types) — one test per valid class, one per invalid
+  - **Decision Tables**: for complex branching, permission matrices, multi-condition logic — one test per condition combination
+  - **State Transition**: for lifecycle objects (order states, workflow steps) — test each valid transition + key invalid ones
+- **Test case IDs**: every test docstring includes `TC-{feature}-{NNN}` and `Verifies: {feature}-AC-{NNN}` for traceability
+- **Integrity levels** (proportional to spec tier):
+  - Tier S: happy-path + one edge case per change. BVA/EP only if boundary-related
+  - Tier M: full technique-driven test suite. Every AC explicitly linked. Coverage >80%
+  - Tier L: all of Tier M + state transition for workflows + decision tables for permission matrices + integration test plan
 
 ### Refactoring (Martin Fowler)
 - Extract Method, Rename, Move, Inline — the everyday toolkit

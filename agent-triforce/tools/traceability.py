@@ -20,7 +20,7 @@ import sys
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import List, Optional, Tuple
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -81,6 +81,8 @@ class TraceLink:
     test_files: List[str] = field(default_factory=list)
     findings: List[str] = field(default_factory=list)
     status: str = "Missing"  # Covered, Partial, Missing
+    test_case_ids: List[str] = field(default_factory=list)
+    link_type: str = "None"  # Explicit, Implicit, None
 
 
 @dataclass
@@ -95,6 +97,7 @@ class TraceabilityMatrix:
     partial_count: int
     missing_count: int
     links: List[TraceLink] = field(default_factory=list)
+    orphaned_tests: List[str] = field(default_factory=list)
 
 
 # ---------------------------------------------------------------------------
@@ -302,6 +305,167 @@ def _scan_reviews(feature_name: str) -> List[str]:
     return sorted(set(matches))
 
 
+# Stopwords excluded from keyword matching
+_KEYWORD_STOPWORDS = frozenset({
+    "the", "when", "given", "then", "that", "should", "with",
+    "from", "this", "into", "have", "been", "will", "does",
+    "each", "also", "both", "more", "than", "only", "some",
+    "they", "them", "their", "there", "here", "which", "what",
+    "where", "after", "before", "about", "just", "over", "such",
+    "other", "these", "those", "would", "could",
+})
+
+# Regex for test case IDs: TC-{feature}-{NNN}
+_TC_ID_PATTERN = re.compile(r"TC-[\w-]+-\d{3}")
+
+# Regex for AC references in test files: Verifies: {criterion-id}
+_VERIFIES_PATTERN = re.compile(r"Verifies:\s*([\w-]+-AC-\d{3})")
+
+# Regex for Implements references in source files
+_IMPLEMENTS_PATTERN = re.compile(r"Implements:\s*([\w-]+-AC-\d{3})")
+
+
+def _extract_keywords(text: str) -> List[str]:
+    """Extract meaningful keywords (>=4 chars, not stopwords) from text."""
+    words = re.findall(r"[a-zA-Z]{4,}", text.lower())
+    return [w for w in words if w not in _KEYWORD_STOPWORDS]
+
+
+def _scan_tests_for_criterion(
+    criterion: AcceptanceCriterion,
+    test_file_paths: List[Path],
+) -> Tuple[List[str], List[str], str]:
+    """Scan test files for references to a specific criterion.
+
+    Returns (matched_test_files, test_case_ids, link_type).
+    link_type is "Explicit" if a Verifies: reference is found,
+    "Implicit" if keyword matching succeeds, or "None" if no match.
+    """
+    matched_files: List[str] = []
+    test_case_ids: List[str] = []
+    link_type = "None"
+
+    # Phase 1: Explicit matching via "Verifies: {criterion_id}"
+    for path in test_file_paths:
+        content = _read_file_safe(path)
+        if not content:
+            continue
+        verifies_refs = _VERIFIES_PATTERN.findall(content)
+        if criterion.criterion_id in verifies_refs:
+            rel = str(path.relative_to(PROJECT_ROOT))
+            if rel not in matched_files:
+                matched_files.append(rel)
+            # Extract TC IDs from this file
+            for tc_id in _TC_ID_PATTERN.findall(content):
+                if tc_id not in test_case_ids:
+                    test_case_ids.append(tc_id)
+            link_type = "Explicit"
+
+    if matched_files:
+        return sorted(matched_files), sorted(test_case_ids), link_type
+
+    # Phase 2: Implicit matching via keywords from criterion text
+    keywords = _extract_keywords(criterion.text)
+    if not keywords:
+        return [], [], "None"
+
+    for path in test_file_paths:
+        content = _read_file_safe(path)
+        if not content:
+            continue
+        content_lower = content.lower()
+        # Require at least 2 keyword matches, or 1 if only 1 keyword exists
+        threshold = min(2, len(keywords))
+        hits = sum(1 for kw in keywords if kw in content_lower)
+        if hits >= threshold:
+            rel = str(path.relative_to(PROJECT_ROOT))
+            if rel not in matched_files:
+                matched_files.append(rel)
+            for tc_id in _TC_ID_PATTERN.findall(content):
+                if tc_id not in test_case_ids:
+                    test_case_ids.append(tc_id)
+            link_type = "Implicit"
+
+    return sorted(matched_files), sorted(test_case_ids), link_type
+
+
+def _scan_impl_for_criterion(
+    criterion: AcceptanceCriterion,
+    impl_file_paths: List[Path],
+) -> Tuple[List[str], str]:
+    """Scan implementation files for references to a specific criterion.
+
+    Returns (matched_impl_files, link_type).
+    link_type is "Explicit" if Verifies:/Implements: reference is found,
+    "Implicit" if keyword matching succeeds, or "None" if no match.
+    """
+    matched_files: List[str] = []
+    link_type = "None"
+
+    # Phase 1: Explicit matching via "Verifies:" or "Implements:" references
+    for path in impl_file_paths:
+        content = _read_file_safe(path)
+        if not content:
+            continue
+        verifies_refs = _VERIFIES_PATTERN.findall(content)
+        implements_refs = _IMPLEMENTS_PATTERN.findall(content)
+        all_refs = verifies_refs + implements_refs
+        if criterion.criterion_id in all_refs:
+            rel = str(path.relative_to(PROJECT_ROOT))
+            if rel not in matched_files:
+                matched_files.append(rel)
+            link_type = "Explicit"
+
+    if matched_files:
+        return sorted(matched_files), link_type
+
+    # Phase 2: Implicit matching via keywords
+    keywords = _extract_keywords(criterion.text)
+    if not keywords:
+        return [], "None"
+
+    for path in impl_file_paths:
+        content = _read_file_safe(path)
+        if not content:
+            continue
+        content_lower = content.lower()
+        threshold = min(2, len(keywords))
+        hits = sum(1 for kw in keywords if kw in content_lower)
+        if hits >= threshold:
+            rel = str(path.relative_to(PROJECT_ROOT))
+            if rel not in matched_files:
+                matched_files.append(rel)
+            link_type = "Implicit"
+
+    return sorted(matched_files), link_type
+
+
+def _find_orphaned_tests(
+    test_file_paths: List[Path],
+    known_criterion_ids: List[str],
+) -> List[str]:
+    """Find test references to ACs that do not exist in the spec.
+
+    Scans all test files for TC-{feature}-{NNN} and Verifies: {AC-ref}
+    patterns, then cross-references against known criterion IDs.
+
+    Returns a list of orphaned AC references (strings).
+    """
+    found_ac_refs: set[str] = set()
+
+    for path in test_file_paths:
+        content = _read_file_safe(path)
+        if not content:
+            continue
+        # Collect all Verifies: references
+        for ref in _VERIFIES_PATTERN.findall(content):
+            found_ac_refs.add(ref)
+
+    known_set = set(known_criterion_ids)
+    orphaned = sorted(ref for ref in found_ac_refs if ref not in known_set)
+    return orphaned
+
+
 # ---------------------------------------------------------------------------
 # Matrix generation
 # ---------------------------------------------------------------------------
@@ -327,33 +491,53 @@ def generate_matrix(feature_name: str) -> Optional[TraceabilityMatrix]:
         # Still produce a matrix, but with a warning
         pass
 
-    # Scan for implementation, tests, and reviews
-    impl_files = _scan_directory(SRC_DIR, SOURCE_EXTENSIONS, feature_name)
-    test_files = _scan_directory(TESTS_DIR, TEST_EXTENSIONS, feature_name)
+    # Collect all candidate files for per-criterion scanning
+    impl_file_paths = _walk_files(SRC_DIR, SOURCE_EXTENSIONS)
+    test_file_paths = _walk_files(TESTS_DIR, TEST_EXTENSIONS)
     review_findings = _scan_reviews(feature_name)
 
-    # Build links
+    # Criterion IDs for orphan detection
+    known_criterion_ids = [c.criterion_id for c in criteria]
+
+    # Build links with per-criterion matching
     links: List[TraceLink] = []
     covered = 0
     partial = 0
     missing = 0
 
     for criterion in criteria:
-        # Simple heuristic: all impl/test files apply to all criteria
-        # More sophisticated matching would parse criterion text against
-        # function names, but that exceeds the zero-dependency constraint
+        # Per-criterion test scanning
+        matched_tests, tc_ids, test_link_type = _scan_tests_for_criterion(
+            criterion, test_file_paths,
+        )
+
+        # Per-criterion implementation scanning
+        matched_impl, impl_link_type = _scan_impl_for_criterion(
+            criterion, impl_file_paths,
+        )
+
+        # Overall link type: Explicit wins over Implicit
+        if test_link_type == "Explicit" or impl_link_type == "Explicit":
+            overall_link_type = "Explicit"
+        elif test_link_type == "Implicit" or impl_link_type == "Implicit":
+            overall_link_type = "Implicit"
+        else:
+            overall_link_type = "None"
+
         link = TraceLink(
             criterion=criterion,
-            implementation_files=impl_files,
-            test_files=test_files,
+            implementation_files=matched_impl,
+            test_files=matched_tests,
             findings=review_findings,
+            test_case_ids=tc_ids,
+            link_type=overall_link_type,
         )
 
         # Determine status
-        if impl_files and test_files:
+        if matched_impl and matched_tests:
             link.status = "Covered"
             covered += 1
-        elif impl_files:
+        elif matched_impl:
             link.status = "Partial"
             partial += 1
         else:
@@ -361,6 +545,9 @@ def generate_matrix(feature_name: str) -> Optional[TraceabilityMatrix]:
             missing += 1
 
         links.append(link)
+
+    # Detect orphaned test references
+    orphaned_tests = _find_orphaned_tests(test_file_paths, known_criterion_ids)
 
     return TraceabilityMatrix(
         feature_name=feature_name,
@@ -371,6 +558,7 @@ def generate_matrix(feature_name: str) -> Optional[TraceabilityMatrix]:
         partial_count=partial,
         missing_count=missing,
         links=links,
+        orphaned_tests=orphaned_tests,
     )
 
 
@@ -399,15 +587,16 @@ def format_matrix_markdown(matrix: TraceabilityMatrix) -> str:
         lines.append(f"**Coverage**: {pct:.0f}%")
         lines.append("")
 
-    # Matrix table
+    # Matrix table (with Test IDs and Link Type columns)
     lines.extend([
-        "| Criterion ID | Criterion | Implementation | Tests | Findings | Status |",
-        "|---|---|---|---|---|---|",
+        "| Criterion ID | Criterion | Implementation | Tests | Test IDs | Findings | Link Type | Status |",
+        "|---|---|---|---|---|---|---|---|",
     ])
 
     for link in matrix.links:
         impl_str = ", ".join(f"`{f}`" for f in link.implementation_files) or "None"
         test_str = ", ".join(f"`{f}`" for f in link.test_files) or "None"
+        tc_ids_str = ", ".join(f"`{tc}`" for tc in link.test_case_ids) or "None"
         findings_str = ", ".join(f"`{f}`" for f in link.findings) or "None"
 
         # Truncate criterion text for table readability
@@ -422,10 +611,41 @@ def format_matrix_markdown(matrix: TraceabilityMatrix) -> str:
         }.get(link.status, link.status)
 
         lines.append(
-            f"| {link.criterion.criterion_id} | {text} | {impl_str} | {test_str} | {findings_str} | {status_marker} |"
+            f"| {link.criterion.criterion_id} | {text} | {impl_str} "
+            f"| {test_str} | {tc_ids_str} | {findings_str} "
+            f"| {link.link_type} | {status_marker} |"
         )
 
     lines.append("")
+
+    # Coverage Summary
+    explicit_count = sum(1 for l in matrix.links if l.link_type == "Explicit")
+    implicit_count = sum(1 for l in matrix.links if l.link_type == "Implicit")
+    uncovered_count = sum(1 for l in matrix.links if l.link_type == "None")
+    orphan_count = len(matrix.orphaned_tests)
+
+    lines.extend([
+        "## Coverage Summary",
+        "",
+        f"- **Explicit**: {explicit_count} ACs with direct TC-ID links",
+        f"- **Implicit**: {implicit_count} ACs matched by keyword only",
+        f"- **Uncovered**: {uncovered_count} ACs with no test found",
+        f"- **Orphaned tests**: {orphan_count} test references to non-existent ACs",
+        "",
+    ])
+
+    # Orphaned Tests section
+    if matrix.orphaned_tests:
+        lines.extend([
+            "## Orphaned Tests",
+            "",
+            "The following test references point to acceptance criteria "
+            "that do not exist in the spec:",
+            "",
+        ])
+        for orphan in matrix.orphaned_tests:
+            lines.append(f"- `{orphan}`")
+        lines.append("")
 
     # Detailed criteria (full text)
     if matrix.links:
@@ -442,6 +662,7 @@ def format_matrix_markdown(matrix: TraceabilityMatrix) -> str:
             else:
                 lines.append(f"{c.text}")
             lines.append(f"- **Status**: {link.status}")
+            lines.append(f"- **Link Type**: {link.link_type}")
             lines.append("")
 
     # Recommendations

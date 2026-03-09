@@ -191,8 +191,8 @@ Run before starting any task. Do your preparation, then confirm:
 ### Implementation Complete (DO-CONFIRM) — 6 items
 **Pause point**: AFTER implementation, BEFORE cleanup. Confirm the code is correct:
 - [ ] Code solves the stated problem (FLY THE AIRPLANE — does it meet the spec?)
-- [ ] Tests written test-first and passing (>80% coverage on business logic, Arrange-Act-Assert pattern)
-- [ ] Every acceptance criterion from the spec has at least one corresponding test (AC-to-test traceability)
+- [ ] Tests written test-first and passing (>80% coverage on business logic, AAA pattern, technique-appropriate: BVA for boundaries, EP for categories, decision tables for branching)
+- [ ] Every AC has at least one test with TC-{feature}-{NNN} ID in docstring and `Verifies: {AC-ID}` reference
 - [ ] Dependencies point inward — no business logic depends on frameworks or infrastructure
 - [ ] Error handling explicit — no bare `except`, no swallowed exceptions, no null returns for errors
 - [ ] Type safety enforced (type hints in Python, strict TS, no unjustified `any`)

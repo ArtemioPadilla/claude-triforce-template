@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2026-03-08
+
+### Added
+- **IEEE 829 Test Design Techniques**: Added structured test design technique selection (BVA, Equivalence Partitioning, Decision Tables, State Transition, Error Guessing) to CLAUDE.md, `/generate-tests` skill, and agent checklists. Based on IEEE 829-2008, O'Regan Ch.6, and LTS QA reference materials.
+- **Test Case ID Format**: `TC-{feature}-{NNN}` with `Verifies: {feature}-AC-{NNN}` docstring convention for end-to-end traceability from spec AC to test function.
+- **Integrity Level Mapping**: Spec tiers (S/M/L) now map to proportional testing rigor — S: minimal, M: full technique-driven, L: comprehensive with integration plan.
+
+### Changed
+- **Traceability Tool**: Replaced naive all-to-all file matching with per-criterion bi-directional traceability. Two-phase matching: explicit (`Verifies:`/`Implements:` annotations) then implicit (keyword extraction with stopword filtering). Added orphan detection for test references to non-existent ACs. Enhanced matrix output with Test IDs, Link Type columns, and Coverage Summary section.
+- **`/generate-tests` Skill**: New TECHNIQUE SELECTION step with decision table for choosing BVA/EP/Decision Table/State Transition/Error Guessing. Technique-driven test generation replaces generic happy-path/edge-case. TC-ID format required in docstrings. Checklist updated (7 → 8 items).
+- **`/traceability` Skill**: Added bi-directional verification step (orphaned tests, unlinked tests, coverage gap summary). Enhanced matrix output format with Link Type column. Checklist updated (7 → 8 items).
+- **`/feature-spec` Skill**: Step 8 now recommends test design technique per high-risk AC.
+- **Prometeo Spec Template**: Testing Considerations section expanded with technique recommendations per AC and integrity level field.
+- **Centinela Review Template**: Test Quality section now includes technique appropriateness and test case ID checks.
+- **Forja Implementation Complete Checklist**: Items 2-3 refined for technique-appropriate testing and TC-ID traceability.
+- **Centinela Quality Verification Checklist**: Item 2 refined for explicit TC-ID linkage and technique assessment.
+
 ## [0.6.0] - 2026-03-07
 
 ### Added
