@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **ADR-001 Quality Model & Standards**: Establishes ISO/IEC 25010:2011 (SQuaRE) as the product quality attribute model, GQM (Basili & Rombach 1988) as the measurement paradigm, and IEEE 829 for test documentation. Maps all 8 ISO 25010 quality attributes to specific agent responsibilities. Instantiates 4 GQM goal-question-metric chains (PCE, Defect Closure Rate, Open Findings Trend, License Compliance).
+
 ## [0.7.0] - 2026-03-08
 
 ### Added
