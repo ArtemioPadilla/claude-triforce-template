@@ -36,6 +36,12 @@ declare -a SKILLS=(
   "reindex"
   "business-review"
   "receiving-code-review"
+  "self-review"
+  "git-worktrees"
+  "visual-companion"
+  "subagent-orchestration"
+  "systematic-debugging"
+  "verification-before-completion"
 )
 
 declare -a TOOLS=(
