@@ -35,6 +35,7 @@ declare -a SKILLS=(
   "traceability"
   "reindex"
   "business-review"
+  "receiving-code-review"
 )
 
 declare -a TOOLS=(
