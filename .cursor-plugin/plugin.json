@@ -1,0 +1,23 @@
+{
+  "name": "agent-triforce",
+  "displayName": "Agent Triforce",
+  "description": "PM/Dev/QA multi-agent development system with checklist methodology",
+  "version": "0.8.0",
+  "author": {
+    "name": "Artemio Padilla"
+  },
+  "homepage": "https://github.com/ArtemioPadilla/claude-triforce-template",
+  "repository": "https://github.com/ArtemioPadilla/claude-triforce-template",
+  "license": "MIT",
+  "keywords": [
+    "multi-agent",
+    "checklist",
+    "tdd",
+    "code-review",
+    "qa"
+  ],
+  "skills": "./skills/",
+  "agents": "./agents/",
+  "commands": "./commands/",
+  "hooks": "./hooks/hooks.json"
+}
