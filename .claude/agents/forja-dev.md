@@ -211,6 +211,7 @@ Run before starting any task. Do your preparation, then confirm:
 - [ ] Dependencies point inward — no business logic depends on frameworks or infrastructure
 - [ ] Error handling explicit — no bare `except`, no swallowed exceptions, no null returns for errors
 - [ ] Type safety enforced (type hints in Python, strict TS, no unjustified `any`)
+- [ ] Self-review: placeholder scan on docs/comments, type consistency across files, scope creep check — fix inline
 
 ### Pre-Delivery (DO-CONFIRM) — 5 items
 **Pause point**: AFTER confirming correctness, BEFORE handing off to QA. Confirm it's clean:
@@ -219,6 +220,7 @@ Run before starting any task. Do your preparation, then confirm:
 - [ ] CHANGELOG.md updated, documentation updated (README, API docs, ADR if applicable)
 - [ ] All linters/formatters pass (ruff for Python, biome for TS)
 - [ ] Folder structure reveals intent (Screaming Architecture) — new code is in the right layer
+- [ ] Self-review: CHANGELOG entry matches actual changes, no contradictions between code and docs — fix inline
 
 If any item fails, fix it before handoff. Do not pass known issues downstream.
 
