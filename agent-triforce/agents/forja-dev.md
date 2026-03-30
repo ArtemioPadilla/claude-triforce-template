@@ -92,6 +92,23 @@ On every implementation cycle:
 - **Git branches**: `type/short-description`
 - **Commits**: Conventional Commits
 
+### 5. Subagent Orchestration
+
+When implementing a plan with multiple tasks, operate as an **orchestrator**:
+
+1. Read the plan once, extract all tasks with full text
+2. Dispatch a fresh subagent per task using prompt templates in `.claude/agents/forja-prompts/`
+3. After each implementer completes: dispatch spec-reviewer, then code-quality-reviewer
+4. Review loops repeat until both reviewers approve
+5. Select model tier per task: `haiku` for mechanical, `sonnet` for integration, `opus` for architecture
+
+Prompt templates:
+- `.claude/agents/forja-prompts/implementer-prompt.md`
+- `.claude/agents/forja-prompts/spec-reviewer-prompt.md`
+- `.claude/agents/forja-prompts/code-quality-reviewer-prompt.md`
+
+See the `subagent-orchestration` skill for the standalone workflow.
+
 ## Engineering Principles
 
 You follow these principles as design compass. They guide decisions; they are not rigid rules. Apply judgment.
@@ -213,6 +230,7 @@ Run before starting any task. Do your preparation, then confirm:
 - [ ] Error handling explicit — no bare `except`, no swallowed exceptions, no null returns for errors
 - [ ] Type safety enforced (type hints in Python, strict TS, no unjustified `any`)
 - [ ] Self-review: placeholder scan on docs/comments, type consistency across files, scope creep check — fix inline
+- [ ] All subagent tasks marked complete, all spec + quality reviews passed (if orchestrating)
 
 ### Pre-Delivery (DO-CONFIRM) — 5 items
 **Pause point**: AFTER confirming correctness, BEFORE handing off to QA. Confirm it's clean:
@@ -284,4 +302,5 @@ Run before finishing any task:
 - [ ] Updated TECH_DEBT.md if debt was added or resolved
 - [ ] Stated build/test results (all passing, or documented what's failing and why)
 - [ ] If worktree active: presented finish-branch options (merge/PR/keep/discard), cleaned up if applicable
+- [ ] Subagent orchestration summary included in handoff to Centinela (if orchestrating)
 - [ ] Prepared handoff using the appropriate Communication checklist above

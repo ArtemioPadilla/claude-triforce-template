@@ -201,6 +201,11 @@ When normal operations fail, the agent switches to the relevant Non-Normal READ-
 
 These principles guide all agents. They are a shared design compass — not rigid rules.
 
+### Quality Models & Measurement (ISO 25010 + GQM)
+- Quality attributes follow **ISO/IEC 25010**: functional suitability, reliability, security, maintainability, performance efficiency, usability, compatibility, portability -- each mapped to an owning agent (see ADR-001)
+- Measurement follows **GQM** (Basili & Rombach 1988): every metric traces to a Goal through a Question. No measurement for measurement's sake
+- Test documentation follows **IEEE 829**: test case IDs, structured reporting, traceability
+
 ### Specifications (IEEE 830 + INVEST)
 - Specs use tiered templates: **S** (bug fix, 5 sections), **M** (standard feature, 14 sections), **L** (epic, 19 sections)
 - Every user story passes **INVEST**: Independent, Negotiable, Valuable, Estimable, Small, Testable
@@ -234,6 +239,10 @@ These principles guide all agents. They are a shared design compass — not rigi
   - Tier S: happy-path + one edge case per change. BVA/EP only if boundary-related
   - Tier M: full technique-driven test suite. Every AC explicitly linked. Coverage >80%
   - Tier L: all of Tier M + state transition for workflows + decision tables for permission matrices + integration test plan
+- **Defect lifecycle**: Open > Assigned > Implemented > Verified > Closed (tracked in review reports)
+- **Entry criteria** (before review): implementation complete, tests pass, Pre-Delivery checklist passed
+- **Exit criteria** (after fixes): all Critical/Major Closed, Minor documented in TECH_DEBT.md
+- **Phase Containment Effectiveness (PCE)**: % of defects found in-phase by Centinela vs escaped post-merge -- target >= 70%
 
 ### Refactoring (Martin Fowler)
 - Extract Method, Rename, Move, Inline — the everyday toolkit
@@ -243,6 +252,8 @@ These principles guide all agents. They are a shared design compass — not rigi
 ### Other
 - **12-Factor App**: config in environment, backing services, disposability, dev/prod parity
 - **Design Patterns (GoF)**: favor composition over inheritance, program to interfaces
+- **FURPS** (Hewlett-Packard): quality attribute categories used in code-health -- Functionality, Reliability, Performance, Supportability
+- **Cost of Quality**: findings classified as prevention, appraisal, internal failure, or external failure cost (Feigenbaum)
 
 ## Project Conventions
 
@@ -269,6 +280,12 @@ These principles guide all agents. They are a shared design compass — not rigi
 - Prefer exceptions over null returns for error handling
 - Structured logging (JSON format)
 - All public APIs documented with OpenAPI/Swagger
+
+### License Compliance
+- Project license: **MIT** -- permissive, allows commercial use and proprietary derivatives
+- Dependency rule: no strong copyleft (GPL, AGPL) in dependency tree -- incompatible with MIT distribution
+- Weak copyleft (LGPL, MPL) requires documented justification in an ADR
+- Enforced by security-audit skill during every audit
 
 ### Documentation
 - Every module has a README explaining purpose and usage
