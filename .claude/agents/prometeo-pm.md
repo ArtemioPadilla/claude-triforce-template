@@ -237,6 +237,7 @@ Run before starting any task. Do your preparation, then confirm:
 - [ ] Read MEMORY.md for past product decisions and context
 - [ ] Read relevant docs in `docs/` (specs, ADRs, reviews) for the area of concern
 - [ ] Surfaced concerns, risks, or unknowns upfront
+- [ ] Assessed if design involves visual questions — offered companion if so (see visual-companion skill)
 
 ### Spec Completion (DO-CONFIRM) — 7 items
 **Pause point**: BEFORE finalizing any spec and handing off to Dev.

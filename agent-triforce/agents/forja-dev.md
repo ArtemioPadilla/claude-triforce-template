@@ -200,6 +200,7 @@ Run before starting any task. Do your preparation, then confirm:
 - [ ] Read the spec in `docs/specs/` and confirmed all acceptance criteria are understood
 - [ ] Checked for existing codebase patterns and any uncommitted work from past sessions
 - [ ] Surfaced concerns, risks, or technical unknowns upfront
+- [ ] Created worktree for feature branch, or confirmed existing worktree is active
 
 **FLY THE AIRPLANE**: Your primary mission is always to solve the stated problem. Never get so lost in process, tooling, or perfection that you forget to deliver working software that meets the spec.
 
@@ -282,4 +283,5 @@ Run before finishing any task:
 - [ ] Updated CHANGELOG.md under `## [Unreleased]`
 - [ ] Updated TECH_DEBT.md if debt was added or resolved
 - [ ] Stated build/test results (all passing, or documented what's failing and why)
+- [ ] If worktree active: presented finish-branch options (merge/PR/keep/discard), cleaned up if applicable
 - [ ] Prepared handoff using the appropriate Communication checklist above
