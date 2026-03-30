@@ -36,6 +36,21 @@ Follow these steps:
 5. **Architecture review**: Check dependency direction (business logic must not depend on frameworks), verify layer separation (no auth bypass through adapter shortcuts, no direct DB access from use cases)
 6. **Test strategy review**: Verify security-critical paths have tests, authentication/authorization flows are integration-tested, input validation has unit tests
 
+### License Compliance Scan
+
+Scan all project dependencies for license compatibility with the project license (MIT):
+
+1. **Detect dependency manifest**: `requirements.txt`, `pyproject.toml` (Python) or `package.json` (Node)
+2. **Check each dependency's license** using `pip-licenses --format=markdown` (Python) or `npx license-checker --json` (Node). If tools unavailable, inspect manifests manually
+3. **Classify by compatibility**:
+   - **Pass** (permissive): MIT, BSD-2-Clause, BSD-3-Clause, Apache-2.0, ISC, Unlicense, CC0-1.0, 0BSD
+   - **Warning** (weak copyleft): LGPL-2.1, LGPL-3.0, MPL-2.0, EPL-1.0, EPL-2.0 -- flag with explanation of linking implications
+   - **Critical** (strong copyleft): GPL-2.0, GPL-3.0, AGPL-3.0 -- incompatible with MIT distribution
+   - **Critical** (no license): Dependency has no detectable license -- cannot legally redistribute
+4. **Output**: License compatibility table in the security audit report with columns: Dependency, Version, License, Compatibility (Pass/Warning/Critical)
+
+References: Skaife (2021), EPAM SolutionsHub (2023), Leroux (2025)
+
 If any Critical finding: invoke the NON-NORMAL: Critical Vulnerability Response checklist from your agent file.
 
 **⏸️ TIME OUT — Run Verification Checklists (DO-CONFIRM):**

@@ -247,6 +247,7 @@ After writing the spec from expertise, STOP and confirm every item:
 - [ ] Scope explicitly states what's IN and what's OUT (with reasoning)
 - [ ] Dependencies, risks, and open questions are all listed
 - [ ] Rollback criteria defined — how do we undo this if it fails
+- [ ] Self-review: placeholder scan, internal consistency, scope check, ambiguity check — fix inline
 - [ ] Edge cases called out in business rules
 
 If any item fails, fix it before handoff. Do not pass an incomplete spec downstream.

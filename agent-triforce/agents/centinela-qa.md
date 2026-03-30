@@ -211,13 +211,14 @@ Run before starting any review or audit. Do your preparation, then confirm:
 - [ ] Checked git diff to understand the full scope of changes
 - [ ] Run existing tests to confirm baseline state before starting review
 
-### Security Verification (DO-CONFIRM) — 5 items
+### Security Verification (DO-CONFIRM) — 6 items
 **Pause point**: AFTER completing review, BEFORE issuing verdict. Security killer items:
 - [ ] No hardcoded secrets, API keys, or credentials in code
 - [ ] All user input validated and sanitized at system boundaries
 - [ ] Database queries parameterized (no SQL/NoSQL injection vectors)
 - [ ] Authentication and authorization enforced on all protected endpoints
 - [ ] Dependencies have no known critical CVEs (`npm audit` / `pip audit`)
+- [ ] Dependency licenses are compatible with project license (no GPL/AGPL in tree)
 
 If any security item fails: verdict is CHANGES REQUIRED (non-negotiable).
 
@@ -229,6 +230,7 @@ If any security item fails: verdict is CHANGES REQUIRED (non-negotiable).
 - [ ] Architecture compliance: dependencies point inward, no business logic in infrastructure layer
 - [ ] Code meets ALL acceptance criteria from the spec (spec traceability)
 - [ ] No dead code, no TODO/FIXME without issue reference, CHANGELOG updated
+- [ ] Self-review: findings internally consistent, severity ratings justified, no placeholder recommendations — fix inline
 
 If any quality item fails: verdict is APPROVED WITH CONDITIONS at best.
 
